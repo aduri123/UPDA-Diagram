@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UPDA – Urban Studies & Policy Planning (Client View)</title>
+  <style>
+    :root { --fg:#111827; --muted:#6b7280; --border:#e5e7eb; --bg:#ffffff; }
+    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Arial; background:var(--bg); color:var(--fg); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    .h1 { font-size: 24px; font-weight: 600; margin: 0 0 6px; }
+    .muted { color: var(--muted); font-size: 12px; }
+    .btn { padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; background:#fff; cursor:pointer; }
+    .btn.active { background:#111827; color:#fff; }
+    .row { display:flex; gap:8px; align-items:center; }
+    .card { border:1px solid var(--border); border-radius:16px; box-shadow: 0 1px 2px rgba(0,0,0,.04); padding: 16px; overflow:auto; margin-top: 6px; }
+    .h2 { font-size: 20px; font-weight: 600; margin: 14px 0 4px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border-bottom:1px solid var(--border); padding:8px 12px; text-align:left; font-size: 14px; }
+    thead { background:#f9fafb; }
+    footer { color:#6b7280; font-size: 12px; padding-top:8px; }
+    /* Simple/Detailed dimming */
+    .dim { opacity: .25; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="h1">UPDA – Urban Studies & Policy Planning</div>
+      <div class="muted">Agentic AI + GeoAI with ArcGIS (Pro, GPServer, Knowledge Graph) · English</div>
+      <div class="row" style="margin-top:8px;">
+        <span class="muted">View:</span>
+        <button id="btn-simple" class="btn active">Simple</button>
+        <button id="btn-detailed" class="btn">Detailed</button>
+        <span class="muted">Simple view dims secondary details.</span>
+      </div>
+    </header>
+
+    <section>
+      <div class="h2">Diagram 1 — End-to-End Architecture</div>
+      <div class="card">
+        <!-- DIAGRAM 1 -->
+        <svg id="diagram1" viewBox="0 0 1200 850" width="100%" height="420" role="img" aria-label="UPDA End-to-End Architecture Diagram">
+          <!-- Cross-cutting banners (secondary) -->
+          <g id="cc-banners" class="secondary dim">
+            <rect x="30" y="20" width="560" height="50" rx="12" fill="#eef7ff" stroke="#bfdbfe"></rect>
+            <text id="text-obs" x="50" y="52" font-size="18" fill="#374151">Observability — tracing · metrics · logs · synthetic probes · drift</text>
+            <rect x="610" y="20" width="560" height="50" rx="12" fill="#ffefef" stroke="#fecaca"></rect>
+            <text id="text-sec" x="630" y="52" font-size="18" fill="#374151">Security &amp; Governance — RBAC/ABAC · scopes · redaction · audit</text>
+          </g>
+
+          <!-- Primary layers -->
+          <g id="layer-user">
+            <rect x="60" y="100" width="1080" height="80" rx="18" fill="#e6f7ff" stroke="#93c5fd"></rect>
+            <text id="text-user" x="80" y="140" font-size="22">User Channels</text>
+            <text x="320" y="140" font-size="18" fill="#374151">Web · Mobile · WhatsApp · Voice (AR/EN) · ArcGIS Pro AI Assistant</text>
+          </g>
+
+          <g id="layer-orch">
+            <rect x="60" y="210" width="520" height="120" rx="18" fill="#f2eaff" stroke="#c4b5fd"></rect>
+            <text id="text-orch" x="80" y="245" font-size="20">Orchestration (LangGraph + LangChain)</text>
+            <text x="80" y="275" font-size="16" fill="#374151">Workflow Coordinator · Policy Logic · Orchestration Guards · Conversation Router</text>
+          </g>
+
+          <g id="layer-mcp">
+            <rect x="620" y="210" width="520" height="120" rx="18" fill="#fff0e6" stroke="#fdba74"></rect>
+            <text id="text-mcp" x="640" y="245" font-size="20">MCP Server (Security Gateway)</text>
+            <text x="640" y="275" font-size="16" fill="#374151">AuthN/Z · API scopes · RBAC/ABAC · PII redaction · evidence trails</text>
+          </g>
+
+          <line x1="600" y1="180" x2="320" y2="210" stroke="#4b5563" stroke-width="2"></line>
+          <line x1="600" y1="180" x2="880" y2="210" stroke="#4b5563" stroke-width="2"></line>
+
+          <g id="layer-agents">
+            <rect x="60" y="350" width="1080" height="130" rx="18" fill="#ebf5eb" stroke="#86efac"></rect>
+            <text x="80" y="385" font-size="20">Agent Layer</text>
+            <text x="80" y="415" font-size="16" fill="#374151">Planning · Retrieval (RAG) · Audit · Conversation · Vision (GeoAI) · ToolCalling · KG Query/Validation</text>
+          </g>
+
+          <g id="layer-api">
+            <rect x="60" y="500" width="1080" height="100" rx="18" fill="#e6f7ff" stroke="#93c5fd"></rect>
+            <text id="text-api" x="80" y="535" font-size="20">Integration/API — FastAPI</text>
+            <text x="80" y="565" font-size="16" fill="#374151">/simulate_zoning · /validate_permit · /classify_change · /accessibility_score · /kg/query</text>
+          </g>
+
+          <g id="layer-arcgis">
+            <rect x="60" y="620" width="1080" height="120" rx="18" fill="#ffffe6" stroke="#fde68a"></rect>
+            <text id="text-arcgis" x="80" y="655" font-size="20">ArcGIS Layer</text>
+            <text x="80" y="685" font-size="16" fill="#374151">Pro GP Tools → GPServer/Web Tools · Knowledge Graph (REST/openCypher) · SDI (WMS/WFS/WCS/CSW/REST)</text>
+          </g>
+
+          <g id="layer-data">
+            <rect x="60" y="760" width="1080" height="70" rx="18" fill="#f2f2f2" stroke="#d1d5db"></rect>
+            <text id="text-data" x="80" y="800" font-size="18">Data &amp; Registries — Parcels · Zoning · Addresses/POIs · Socio-economic · Mobility · Environment · Assets/Permits/Inspections · Imagery/LiDAR</text>
+          </g>
+
+          <g id="outputs" class="secondary">
+            <rect x="920" y="370" width="200" height="110" rx="14" fill="#ecfdf5" stroke="#6ee7b7"></rect>
+            <text x="940" y="400" font-size="18">Outputs</text>
+            <text x="940" y="425" font-size="14">Scenario Dashboard</text>
+            <text x="940" y="445" font-size="14">Compliance Reports</text>
+            <text x="940" y="465" font-size="14">Decision Packs / APIs</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section>
+      <div class="h2">Diagram 2 — Detailed Data Flow (Coordinator-led Rezoning)</div>
+      <div class="muted">In Simple view, steps 4–7 are dimmed; switch to Detailed for full clarity.</div>
+      <div class="card">
+        <!-- DIAGRAM 2 -->
+        <svg id="diagram2" viewBox="0 0 1200 700" width="100%" height="420" role="img" aria-label="UPDA Detailed Data Flow Diagram">
+          <g id="lane-1"><rect x="50" y="60" width="1100" height="70" rx="12" fill="#e6f7ff" stroke="#93c5fd"></rect><text id="text-df-1" x="70" y="100" font-size="18">1) Request Intake</text><text x="330" y="100" font-size="16" fill="#374151">User → Conversation Agent → Intent + Context</text></g>
+          <g id="lane-2"><rect x="50" y="150" width="1100" height="70" rx="12" fill="#f2eaff" stroke="#c4b5fd"></rect><text x="70" y="190" font-size="18">2) Orchestrate</text><text x="250" y="190" font-size="16" fill="#374151">LangGraph selects workflow; MCP checks scopes</text></g>
+          <g id="lane-3"><rect x="50" y="240" width="1100" height="70" rx="12" fill="#ebf5eb" stroke="#86efac"></rect><text x="70" y="280" font-size="18">3) Retrieve</text><text x="230" y="280" font-size="16" fill="#374151">RAG fetches zoning codes, policies, socio-economic briefs</text></g>
+          <g id="lane-4" class="secondary dim"><rect x="50" y="330" width="1100" height="70" rx="12" fill="#e6f0ff" stroke="#93c5fd"></rect><text x="70" y="370" font-size="18">4) Plan &amp; Simulate</text><text x="290" y="370" font-size="16" fill="#374151">Planning Agent → FastAPI → GPServer &amp; SDI layers</text></g>
+          <g id="lane-5" class="secondary dim"><rect x="50" y="420" width="1100" height="70" rx="12" fill="#ffffe6" stroke="#fde68a"></rect><text x="70" y="460" font-size="18">5) GeoAI Checks</text><text x="260" y="460" font-size="16" fill="#374151">Vision Agent verifies overlaps, density, buffers</text></g>
+          <g id="lane-6" class="secondary dim"><rect x="50" y="510" width="1100" height="70" rx="12" fill="#fff0e6" stroke="#fdba74"></rect><text x="70" y="550" font-size="18">6) Audit &amp; Evidence</text><text x="300" y="550" font-size="16" fill="#374151">Audit Agent applies RBAC/ABAC rules; compiles logs</text></g>
+          <g id="lane-7" class="secondary dim"><rect x="50" y="600" width="1100" height="70" rx="12" fill="#ecfdf5" stroke="#6ee7b7"></rect><text id="text-df-7" x="70" y="640" font-size="18">7) Decision Pack</text><text x="280" y="640" font-size="16" fill="#065f46">KPIs + maps + rule hits → Dashboard &amp; Approver</text></g>
+        </svg>
+      </div>
+    </section>
+
+    <section>
+      <div class="h2">Runtime Smoke Tests</div>
+      <div class="muted">These verify the key parts are present. If any fail, tell me what you expected.</div>
+      <div class="card">
+        <table>
+          <thead>
+            <tr><th>Check</th><th>Pass</th><th>Note</th></tr>
+          </thead>
+          <tbody id="tests-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>Aduri Sreenivas · MicroCenter Gulf · September 2025</footer>
+  </div>
+
+  <script>
+    // Simple/Detailed toggle (no libraries)
+    const btnSimple = document.getElementById('btn-simple');
+    const btnDetailed = document.getElementById('btn-detailed');
+    function setMode(mode) {
+      const simple = mode === 'simple';
+      btnSimple.classList.toggle('active', simple);
+      btnDetailed.classList.toggle('active', !simple);
+      document.querySelectorAll('.secondary').forEach(g => g.classList.toggle('dim', simple));
+    }
+    btnSimple.addEventListener('click', () => setMode('simple'));
+    btnDetailed.addEventListener('click', () => setMode('detailed'));
+
+    // Smoke tests
+    function runSmokeTests(doc=document){
+      const ids = [
+        'layer-user','layer-orch','layer-mcp','layer-agents','layer-api','layer-arcgis','layer-data','outputs',
+        'lane-1','lane-2','lane-3','lane-4','lane-5','lane-6','lane-7'
+      ];
+      const out = [];
+      ids.forEach(id => out.push({ name:id, pass: !!doc.getElementById(id) }));
+      // Extras
+      const d1 = doc.getElementById('diagram1');
+      const d2 = doc.getElementById('diagram2');
+      out.push({ name:'viewBox-1', pass: d1?.getAttribute('viewBox') === '0 0 1200 850', note: d1?.getAttribute('viewBox') });
+      out.push({ name:'viewBox-2', pass: d2?.getAttribute('viewBox') === '0 0 1200 700', note: d2?.getAttribute('viewBox') });
+      return out;
+    }
+
+    function renderTests(){
+      const tbody = document.getElementById('tests-body');
+      const results = runSmokeTests();
+      tbody.innerHTML = results.map(r => (
+        `<tr>
+          <td style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas">${r.name}</td>
+          <td>${r.pass ? '✔' : '✖'}</td>
+          <td class="muted">${r.note || ''}</td>
+        </tr>`
+      )).join('');
+    }
+
+    // init
+    setMode('simple');
+    renderTests();
+  </script>
+</body>
+</html>
