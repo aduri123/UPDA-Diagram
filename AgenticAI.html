@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>UPDA Diagram — End-to-End Architecture & Data Flow</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg:#fafafa; --text:#333; --muted:#666; --line:#ddd;
+      --blue:#d7ecff; --purple:#ede2ff; --green:#dbffe2;
+      --orange:#ffe8d7; --yellow:#fff7d6; --gray:#f2f2f2;
+      --btn:#0b67d0; --btnText:#fff;
+    }
+    html,body { margin:0; padding:0; background:#fff; color:var(--text); font-family: Arial, sans-serif; }
+    .page { max-width: 980px; margin: 24px auto 48px; padding: 0 16px; }
+    header {
+      background: var(--bg); border: 1px solid var(--line); border-radius: 12px;
+      padding: 18px 20px; margin-bottom: 16px;
+    }
+    h1 { margin: 0 0 6px; font-size: 26px; }
+    .sub { margin:4px 0 0; color: var(--muted); font-size: 14px; }
+    .btnbar { margin: 14px 0 22px; }
+    .btn {
+      display:inline-block; padding:10px 14px; border-radius:10px; background:var(--btn);
+      color:var(--btnText); text-decoration:none; font-weight:600;
+    }
+    .btn:hover { opacity:.92; }
+
+    h2 { margin-top: 28px; }
+    .box {
+      margin:10px 0; padding:10px; border-radius:8px; color:#000;
+    }
+    .blue { background: var(--blue); }
+    .purple { background: var(--purple); }
+    .green { background: var(--green); }
+    .orange { background: var(--orange); }
+    .yellow { background: var(--yellow); }
+    .gray { background: var(--gray); }
+
+    footer {
+      margin-top: 36px; padding-top: 14px; border-top:1px solid var(--line);
+      text-align:center; color: var(--muted); font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Header -->
+    <header>
+      <h1>UPDA Diagram — End-to-End Architecture & Data Flow</h1>
+      <p class="sub">High-level view of channels, orchestration, security, ArcGIS services, and data registries.</p>
+    </header>
+
+    <!-- Link to Agents page -->
+    <div class="btnbar">
+      <a class="btn" href="agents.html">Go to Agents Page →</a>
+    </div>
+
+    <!-- Diagram 1 -->
+    <h2>Diagram 1 — End-to-End Architecture</h2>
+    <div class="box blue">Observability · Security &amp; Governance · RBAC/ABAC · Audit</div>
+    <div class="box purple">User Channels — Web · Mobile · WhatsApp · Voice · ArcGIS Pro AI Assistant</div>
+    <div class="box purple">Orchestration (LangGraph + LangChain)</div>
+    <div class="box orange">MCP Server (Security Gateway)</div>
+    <div class="box green">Agent Layer — Planning · Retrieval (RAG) · Audit · Conversation · GeoAI · Tool-Calling · Code</div>
+    <div class="box blue">Integration/API — FastAPI (simulate_zoning, validate_permit) · Enterprise APIs (RERA/Benayat/Tasareeh)</div>
+    <div class="box purple">ArcGIS Layer — GP Tools · GPServer · Knowledge Graph · SDI (WMS/WFS/WCS)</div>
+    <div class="box gray">Data &amp; Registries — Parcels · Zoning · Socio-economic · Mobility · LiDAR</div>
+
+    <!-- Diagram 2 -->
+    <h2>Diagram 2 — Detailed Data Flow</h2>
+    <div class="box blue">1) Request Intake — User → 💬 Conversation Agent → Intent + Context</div>
+    <div class="box purple">2) Orchestrate — 🔄 LangGraph selects workflow; 🛡️ MCP checks scopes</div>
+    <div class="box green">3) Retrieve — 📖 RAG fetches zoning codes, policies, socio-economic briefs</div>
+    <div class="box blue">4) Plan &amp; Simulate — 🗂️ Planning Agent → 🔌 Tool-Calling Agents invoke FastAPI/ArcGIS GPServer</div>
+    <div class="box yellow">5) GeoAI Checks — 🗺️ Vision/GeoAI Agent verifies overlaps, density, buffers</div>
+    <div class="box orange">6) Audit &amp; Evidence — ✅ Audit Agent applies rules; compiles logs, reports, anomaly flags</div>
+    <div class="box green">7) Decision Pack — KPIs + maps + rule hits → Dashboard &amp; Approver</div>
+
+    <!-- Footer -->
+    <footer>
+      Aduri Sreenivas · MicroCenter Gulf · September 2025
+    </footer>
+  </div>
+</body>
+</html>
