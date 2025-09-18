@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GeospatialAgenticAI — Tech Map (RAG · MCP · LangGraph · LangChain)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #0f172a; /* slate-900 */
+      --muted: #475569; /* slate-600 */
+      --border: #e2e8f0; /* slate-200 */
+      --accent: #111827; /* gray-900 */
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 2rem 1rem 3rem;
+      background: var(--bg);
+      color: var(--fg);
+      font: 16px/1.55 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 {
+      font-size: 1.75rem;
+      line-height: 1.2;
+      margin: 0 0 .5rem;
+      letter-spacing: .2px;
+    }
+    .sub {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      font-size: .95rem;
+    }
+    .table-wrap {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 0 rgba(0,0,0,.03);
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    thead th {
+      text-align: left;
+      background: #f8fafc; /* slate-50 */
+      color: var(--accent);
+      font-weight: 700;
+      padding: .85rem .9rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tbody td {
+      padding: .8rem .9rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      color: var(--fg);
+    }
+    tbody tr:last-child td { border-bottom: 0; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .small { font-size: .95rem; }
+    .muted { color: var(--muted); }
+    .pill {
+      display: inline-block;
+      padding: .1rem .45rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: .8rem;
+      line-height: 1.2;
+      margin-right: .35rem;
+      background: #f8fafc;
+    }
+    @media (max-width: 900px) {
+      body { padding: 1rem; }
+      table { display: block; overflow-x: auto; white-space: nowrap; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>GeospatialAgenticAI — Tech Map <span class="muted">(RAG · MCP · LangGraph · LangChain)</span></h1>
+    <div class="sub">Five agent types mapped to core technologies and their responsibilities. Ready to embed in a GitHub README or publish as a standalone page.</div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 17rem;">Agent Type (the 5)</th>
+            <th>Where RAG fits</th>
+            <th>Where MCP fits</th>
+            <th>Where <span class="mono">LangChain</span> fits</th>
+            <th>Where <span class="mono">LangGraph</span> fits</th>
+            <th style="width: 15rem;">Typical I/O</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1) Conversation Agent</strong> <span class="muted small">(chat/voice)</span></td>
+            <td>Retrieves laws, SOPs, datasets → grounds answers and tool choices.</td>
+            <td>Enforces who can ask what; redacts sensitive layers; routes only allowed tool calls.</td>
+            <td>LLM chain for intent → tool selection (search, SQL, map ops) + prompt templates, memory.</td>
+            <td>Orchestrates multi‑step dialog → retrieve → clarify → act → summarize.</td>
+            <td><strong>In:</strong> user question; <strong>Out:</strong> grounded answer + optional action.</td>
+          </tr>
+
+          <tr>
+            <td><strong>2) Planning Agent</strong> <span class="muted small">(what‑if, zoning scenarios)</span></td>
+            <td>Pulls policies, historic plans, KPIs to justify scenario generation.</td>
+            <td>Guards policy scopes (e.g., district, roles), prevents disallowed simulations.</td>
+            <td>Multi‑tool chains (sim models, KPI calculators, report writer).</td>
+            <td>Graph of steps/branches: generate options → score → compare → pick → explain.</td>
+            <td><strong>In:</strong> objectives/constraints; <strong>Out:</strong> ranked scenarios + rationale.</td>
+          </tr>
+
+          <tr>
+            <td><strong>3) Code Agent</strong> <span class="muted small">(SQL/Cypher/Python/GP tools)</span></td>
+            <td>Fetches schema/docs/examples to generate correct code.</td>
+            <td>Whitelists tools, schemas, DBs; masks credentials; logs execution.</td>
+            <td>Tool‑calling to DBs, KG, GPServer; validators in chain.</td>
+            <td>Safe orchestration: draft → validate → dry‑run → execute → rollback on fail.</td>
+            <td><strong>In:</strong> NL request; <strong>Out:</strong> executable code + result layer.</td>
+          </tr>
+
+          <tr>
+            <td><strong>4) Retrieval Agent</strong> <span class="muted small">(RAG)</span></td>
+            <td><strong>Core:</strong> hybrid search over regs, specs, datasets; chunking + rerank.</td>
+            <td>Ensures only permitted corpora/indexes used; audit trail for citations.</td>
+            <td>Retrieval pipelines (vector / keyword), rewriters, summarizers.</td>
+            <td>Branching: failed retrieval → reformulate → fallback sources → cite.</td>
+            <td><strong>In:</strong> query; <strong>Out:</strong> citations + grounded context/summary.</td>
+          </tr>
+
+          <tr>
+            <td><strong>5) Audit/Validation Agent</strong> <span class="muted small">(rules, compliance, drift)</span></td>
+            <td>Pulls rules (codes, IDS, schemas) + prior cases to explain findings.</td>
+            <td>Policy checks (RBAC/ABAC), tamper‑proof logs, MCP “allow/deny” gates.</td>
+            <td>Chains for rule checks, schema validators, diff/drift detectors.</td>
+            <td>Orchestrates checks: data QA → rule eval → exception handling → report.</td>
+            <td><strong>In:</strong> dataset/model/output; <strong>Out:</strong> pass/fail, diffs, compliance report.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="small muted" style="margin-top:1rem">
+      Badges: <span class="pill">RAG</span> <span class="pill">MCP</span> <span class="pill">LangChain</span> <span class="pill">LangGraph</span> — place these labels on boxes in your layered diagram to match this table.
+    </p>
+  </div>
+</body>
+</html>
