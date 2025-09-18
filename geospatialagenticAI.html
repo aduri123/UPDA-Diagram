@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Geospatial Agentic AI — ArcGIS + MCP + RAG</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg:#fafafa; --text:#333; --muted:#666; --line:#ddd;
+      --blue:#d7ecff; --purple:#ede2ff; --green:#dbffe2;
+      --orange:#ffe8d7; --yellow:#fff7d6; --gray:#f2f2f2;
+      --btn:#0b67d0; --btnTxt:#fff;
+    }
+    html,body { margin:0; padding:0; background:#fff; color:var(--text); font-family: Arial, sans-serif; }
+    .page { max-width: 1024px; margin: 24px auto 48px; padding: 0 16px; }
+    header {
+      background: var(--bg); border:1px solid var(--line); border-radius:12px;
+      padding:18px 20px; margin-bottom:14px;
+    }
+    h1 { margin:0 0 6px; font-size:26px; }
+    .sub { margin:4px 0 0; color:var(--muted); font-size:14px; }
+
+    nav { margin: 12px 0 18px; }
+    a { text-decoration:none; }
+    .btn {
+      display:inline-block; padding:10px 14px; border-radius:10px; background:var(--btn);
+      color:var(--btnTxt); font-weight:600; margin-right:10px;
+    }
+    .btn:hover { opacity:.92; }
+    .btn-outline {
+      display:inline-block; padding:10px 14px; border-radius:10px; border:1px solid var(--btn);
+      color:var(--btn); margin-right:10px;
+    }
+    .btn-outline:hover { background:#eaf3ff; }
+
+    h2 { margin-top:28px; }
+    .box { margin:10px 0; padding:10px; border-radius:8px; color:#000; }
+    .blue { background:var(--blue); }
+    .purple { background:var(--purple); }
+    .green { background:var(--green); }
+    .orange { background:var(--orange); }
+    .yellow { background:var(--yellow); }
+    .gray { background:var(--gray); }
+
+    .section-block {
+      margin:16px 0 8px; padding:15px; border:1px solid var(--line);
+      border-radius:10px; background:#f9f9f9;
+    }
+    .section-block ul { list-style:none; padding-left:0; font-size:16px; line-height:1.6; }
+    .section-block li { margin-bottom:12px; }
+    .indent { margin-left:20px; }
+    code { background:#fff; border:1px solid var(--line); border-radius:6px; padding:0 4px; }
+
+    footer {
+      margin-top:36px; padding-top:14px; border-top:1px solid var(--line);
+      text-align:center; color:var(--muted); font-size:14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Header -->
+    <header>
+      <h1>Geospatial Agentic AI — ArcGIS + MCP + RAG</h1>
+      <p class="sub">Applied to <b>Urban Analytics &amp; Policy</b> — land-use, zoning compliance, infrastructure status, and scenario planning.</p>
+    </header>
+
+    <!-- Nav -->
+    <nav>
+      <a class="btn-outline" href="index.html">Main Diagram</a>
+      <a class="btn-outline" href="agents.html">Agents Page</a>
+      <a class="btn-outline" href="AgenticAI.html">Agentic AI Architecture</a>
+      <a class="btn" href="GeospatialAgenticAI.html">Geospatial AgenticAI</a>
+    </nav>
+
+    <!-- High-Level Architecture -->
+    <h2>Architecture Overview</h2>
+    <div class="box blue">Security &amp; Governance — RBAC/ABAC · Secrets · Audit · Observability</div>
+    <div class="box purple">Channels — Web · Mobile · WhatsApp · Voice · ArcGIS Pro AI Assistant</div>
+    <div class="box purple">Orchestration — LangGraph (routing/guards) + LangChain (tools/RAG)</div>
+    <div class="box orange">MCP Server — scoped tool access to ArcGIS, SDI, DBs, external APIs</div>
+    <div class="box green">Agents — Conversation · Retrieval (RAG) · Planning · Vision · Tool-Calling · Code · Audit · TestGen</div>
+    <div class="box blue">Integration — FastAPI endpoints (simulate_zoning, validate_permit, assess_impact)</div>
+    <div class="box purple">ArcGIS — GP Tools/GPServer · Knowledge Graph (openCypher) · Query Layers (SQL) · SDI (WMS/WFS/WCS)</div>
+    <div class="box gray">Data — Parcels · Zoning · Networks (roads/utilities) · Socio-economic · Imagery/LiDAR</div>
+
+    <!-- Agents (Concise) -->
+    <h2>Agents Collaborate</h2>
+    <div class="section-block">
+      <ul>
+        <li>📖 <b>Retrieval</b> — fetch regulatory docs, inspection records, datasets (RAG + KG).</li>
+        <li>🗂️ <b>Planning</b> — simulate zoning/land-use scenarios; design what-if (density, FAR, setbacks); coordinate multi-department inputs.</li>
+        <li>🛰️ <b>Vision</b> — detect unauthorized construction; track road/utility/public-facility condition from satellite/LiDAR.</li>
+        <li>🔌 <b>Tool-Calling</b> — invoke APIs/GP tools; query SDI services; write Feature Service edits safely.</li>
+        <li>🧑‍💻 <b>Code</b> — run ML pipelines (feature engineering, XGBoost/regression) for land-value/demand; compile SQL/openCypher for Query Layers &amp; Knowledge Graph (parcel–permit–inspection joins).</li>
+        <li>✅ <b>Audit</b> — compliance checks; reports; anomaly flags.</li>
+        <li>🧪 <b>TestGen</b> — synthetic spatial datasets; data-drift detection; regression tests for policies &amp; simulations.</li>
+        <li>💬 <b>Conversation</b> — chat/voice UX; explain results; guide workflows.</li>
+      </ul>
+    </div>
+
+    <!-- Orchestration -->
+    <h2>Orchestration (LangGraph + LangChain)</h2>
+    <div class="section-block">
+      <ul>
+        <li>🔄 <b>LangGraph</b>
+          <div class="indent">• Branch &amp; merge parallel tasks (zoning check + impact analysis) then reconcile.</div>
+          <div class="indent">• Human-in-the-loop approval gates for high-risk actions (permits/overrides).</div>
+          <div class="indent">• Route intents to agents (Planning, Vision, Code, Conversation) via typed nodes.</div>
+        </li>
+        <li>🧰 <b>LangChain</b>
+          <div class="indent">• Wrap ArcGIS/SDI/BIM services as tools (WMS/WFS/WCS, Feature Services, IFC parsers).</div>
+          <div class="indent">• Compose RAG chains (retrieve → ground → generate → verify) for policy answers.</div>
+          <div class="indent">• Build tool-calling agents that execute ArcPy/GP tasks and SQL/OpenCypher queries.</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- API Examples -->
+    <h2>Example API Endpoints (FastAPI)</h2>
+    <div class="section-block">
+      <ul>
+        <li><code>POST /simulate_zoning</code> — run GP tools, compute KPIs (coverage, FAR, open-space ratio).</li>
+        <li><code>POST /validate_permit</code> — rule checks (setbacks, frontage, lot size) + evidence log.</li>
+        <li><code>POST /impact_assessment</code> — traffic/utilities demand estimation for a scenario.</li>
+      </ul>
+    </div>
+
+    <!-- ArcGIS Queries -->
+    <h2>Query Layers &amp; Knowledge Graph</h2>
+    <div class="section-block">
+      <ul>
+        <li>SQL (Query Layers): <code>SELECT parcel_id, zoning, area FROM parcels WHERE zoning='RES' AND area &gt; 500</code></li>
+        <li>openCypher (KG): <code>MATCH (p:Parcel)-[:HAS_PERMIT]-&gt;(perm:Permit) WHERE perm.status='Active' AND NOT (perm)-[:HAS_INSPECTION]-&gt;(:Inspection) RETURN p.parcelId, perm.permitId</code></li>
+      </ul>
+    </div>
+
+    <!-- Data & SDI -->
+    <h2>Data &amp; SDI Integration</h2>
+    <div class="section-block">
+      <ul>
+        <li>SDI services — WMS/WFS/WCS for base layers and authoritative datasets.</li>
+        <li>Feature Services — edits via guarded Tool-Calling agents (MCP scopes).</li>
+        <li>Imagery/LiDAR — Vision agent pipelines for detection/change tracking.</li>
+      </ul>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      Aduri Sreenivas · MicroCenter Gulf · September 2025
+    </footer>
+  </div>
+</body>
+</html>
