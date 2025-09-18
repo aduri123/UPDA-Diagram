@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>UPDA Diagram</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h2 {
+      margin-top: 40px;
+      color: #333;
+    }
+    .box {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 6px;
+      color: #000;
+    }
+    .blue { background-color: #d7ecff; }
+    .purple { background-color: #ede2ff; }
+    .green { background-color: #dbffe2; }
+    .orange { background-color: #ffe8d7; }
+    .yellow { background-color: #fff7d6; }
+    .gray { background-color: #f2f2f2; }
+    .agents {
+      margin: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+    .agents ul {
+      font-size: 16px;
+      line-height: 1.6;
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .agents li::before {
+      content: "➤ ";
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h2>Diagram 1 — End-to-End Architecture</h2>
+  <div class="box blue">Observability · Security & Governance · RBAC/ABAC · Audit</div>
+  <div class="box purple">User Channels — Web · Mobile · WhatsApp · Voice · ArcGIS Pro AI Assistant</div>
+  <div class="box purple">Orchestration (LangGraph + LangChain)</div>
+  <div class="box orange">MCP Server (Security Gateway)</div>
+  <div class="box green">Agent Layer — Planning · Retrieval (RAG) · Audit · Conversation · GeoAI</div>
+  <div class="box blue">Integration/API — FastAPI (simulate_zoning, validate_permit)</div>
+  <div class="box purple">ArcGIS Layer — GP Tools, GPServer, Knowledge Graph, SDI (WMS/WFS/WCS)</div>
+  <div class="box gray">Data & Registries — Parcels, Zoning, Socio-economic, Mobility, LiDAR</div>
+
+  <h2>Diagram 2 — Detailed Data Flow</h2>
+  <div class="box blue">1) Request Intake — User → Conversation Agent → Intent + Context</div>
+  <div class="box purple">2) Orchestrate — LangGraph selects workflow; MCP checks scopes</div>
+  <div class="box green">3) Retrieve — RAG fetches zoning codes, policies, socio-economic briefs</div>
+  <div class="box blue">4) Plan & Simulate — Planning Agent → FastAPI → GPServer & SDI layers</div>
+  <div class="box yellow">5) GeoAI Checks — Vision Agent verifies overlaps, density, buffers</div>
+  <div class="box orange">6) Audit & Evidence — Audit Agent applies rules; compiles logs</div>
+  <div class="box green">7) Decision Pack — KPIs + maps + rule hits → Dashboard & Approver</div>
+
+  <h2>Agents Collaborate</h2>
+  <div class="agents">
+    <ul>
+      <li><b>Retrieval Agent</b> → fetches rules</li>
+      <li><b>Planning Agent</b> → designs the workflow</li>
+      <li><b>Audit Agent</b> → checks compliance</li>
+      <li><b>Conversation Agent</b> → interacts with users</li>
+    </ul>
+  </div>
+</body>
+</html>
