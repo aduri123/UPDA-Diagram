@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Geospatial Agentic Architecture for Government — Application Flow</title>
+  <meta name="description" content="Slide-style single page for GitHub Pages: ArcGIS, MCP, RAG, Knowledge Graph, SDI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root{
+      --gov:#2563eb; --orch:#f97316; --agent:#16a34a; --data:#6b7280; --out:#7c3aed;
+      --bg:#0b1220; --card:#0f172a; --muted:#94a3b8;
+    }
+    html,body{height:100%; background:linear-gradient(180deg,#0b1220,#0b1020 40%,#0b1220); color:#e5e7eb; font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
+    .slide{height:100dvh; width:100%; display:none;}
+    .slide.active{display:block;}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02)); border:1px solid rgba(148,163,184,0.15); box-shadow:0 10px 30px rgba(0,0,0,0.25);}    
+    .badge{border-radius:9999px; font-size:.75rem; padding:.25rem .6rem; border:1px solid rgba(255,255,255,0.15)}
+    .grid-card{background:rgba(255,255,255,0.03); border:1px solid rgba(148,163,184,0.16); border-radius:1rem; padding:1rem}
+    .accent{background: radial-gradient(800px 300px at 20% 0%, rgba(124,58,237,.18), transparent 70%),
+             radial-gradient(600px 300px at 80% 0%, rgba(37,99,235,.15), transparent 70%);}   
+    /* Numbered nav buttons */
+    .dot-btn{ width:32px; height:32px; border-radius:9999px; border:1px solid rgba(255,255,255,0.4); background:transparent; color:#e5e7eb; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; transition:transform .15s ease; }
+    .dot-btn:hover{ transform:scale(1.1); }
+    .dot-btn.active{ background:white; color:#0b1220; border-color:white; }
+    @media print{ .slide{display:block; height:auto; page-break-after:always} #nav, #kbs, #help {display:none} }
+  </style>
+</head>
+<body class="accent">
+  <!-- Top Bar -->
+  <header class="fixed top-0 left-0 right-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/45 bg-slate-900/60 border-b border-slate-700/40">
+    <div class="max-w-7xl mx-auto px-4 py-2 flex items-center gap-3">
+      <div class="text-sm text-slate-300/80">Geospatial Agentic Architecture</div>
+      <div class="h-4 w-px bg-slate-600/50"></div>
+      <nav id="kbs" class="hidden md:flex flex-wrap gap-2 text-xs">
+        <a href="#1" class="badge hover:bg-white/10">Title</a>
+        <a href="#2" class="badge hover:bg-white/10">Agenda</a>
+        <a href="#3" class="badge hover:bg-white/10">Governance</a>
+        <a href="#4" class="badge hover:bg-white/10">Orchestration</a>
+        <a href="#5" class="badge hover:bg-white/10">Agents (R&amp;G)</a>
+        <a href="#6" class="badge hover:bg-white/10">Agents (Integration)</a>
+        <a href="#7" class="badge hover:bg-white/10">Agents (Orch)</a>
+        <a href="#8" class="badge hover:bg-white/10">DAG Examples</a>
+        <a href="#9" class="badge hover:bg-white/10">Permit Flow</a>
+        <a href="#10" class="badge hover:bg-white/10">FastAPI</a>
+        <a href="#11" class="badge hover:bg-white/10">ArcGIS</a>
+        <a href="#12" class="badge hover:bg-white/10">Data Plane</a>
+        <a href="#13" class="badge hover:bg-white/10">SQL/KG</a>
+        <a href="#14" class="badge hover:bg-white/10">Outcomes</a>
+        <a href="#15" class="badge hover:bg-white/10">DevOps</a>
+        <a href="#16" class="badge hover:bg-white/10">Closing</a>
+      </nav>
+      <div class="ml-auto text-xs text-slate-400" id="help">Use ← → keys or swipe</div>
+    </div>
+  </header>
+
+  <!-- Numbered Nav Buttons -->
+  <aside id="nav" class="fixed right-3 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-2"></aside>
+
+  <!-- Slides -->
+  <main>
+    <!-- 1: Title -->
+    <section class="slide active" data-slide="1">
+      <div class="max-w-6xl mx-auto h-full px-6 pt-24 flex items-center">
+        <div class="w-full card rounded-3xl p-10">
+          <div class="text-2xl md:text-4xl font-extrabold leading-tight">Geospatial Agentic Architecture for Government — <span class="text-slate-300">Application Flow</span></div>
+          <p class="mt-3 text-slate-400">Covers ArcGIS, MCP, RAG, Knowledge Graph, SDI — applied across Urban Analytics, Land Registry, Real Estate, Permits, Public Works, Inspections, Citizen Services.</p>
+          <div class="mt-8 flex flex-wrap gap-3 text-sm">
+            <span class="badge border-slate-600/50" style="background:rgba(37,99,235,.15); color:#cbd5ff"><i class="fa-solid fa-shield-halved mr-2"></i>Security &amp; Governance</span>
+            <span class="badge" style="background:rgba(249,115,22,.15); color:#ffd7b0"><i class="fa-solid fa-diagram-project mr-2"></i>Orchestration &amp; MCP</span>
+            <span class="badge" style="background:rgba(22,163,74,.15); color:#b8f3c6"><i class="fa-solid fa-robot mr-2"></i>GenAI &amp; GeoAI Agents</span>
+            <span class="badge" style="background:rgba(107,114,128,.25); color:#e5e7eb"><i class="fa-solid fa-database mr-2"></i>ArcGIS &amp; Data Plane</span>
+            <span class="badge" style="background:rgba(124,58,237,.18); color:#e9d5ff"><i class="fa-solid fa-chart-line mr-2"></i>Outcomes</span>
+          </div>
+          <div class="mt-10 text-slate-300">Aduri Sreenivas · MicroCenter Gulf</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2: Agenda / Domains / Channels -->
+    <section class="slide" data-slide="2">
+      <div class="max-w-6xl mx-auto h-full px-6 pt-24 flex items-center">
+        <div class="w-full grid md:grid-cols-2 gap-6">
+          <div class="card rounded-3xl p-8">
+            <h2 class="text-xl font-bold mb-4"><i class="fa-solid fa-list-check mr-2"></i>Government Domains</h2>
+            <ul class="grid grid-cols-2 gap-2 text-slate-300 text-sm">
+              <li>Urban Analytics &amp; Policy</li>
+              <li>Urban Studies (morphology, accessibility, equity)</li>
+              <li>Land Registry (Cadastre &amp; Titles)</li>
+              <li>Real Estate (AVM &amp; Listings)</li>
+              <li>Urban Planning &amp; Permits</li>
+              <li>Public Works &amp; Assets</li>
+              <li>Health &amp; Safety Inspections</li>
+              <li>Emergency &amp; Incident Response</li>
+              <li>Finance &amp; Revenues</li>
+              <li>Citizen Services – Complaints / Tawasul</li>
+              <li>Environment &amp; Waste</li>
+              <li>Transportation &amp; Traffic</li>
+              <li>Utilities (Water/Power)</li>
+            </ul>
+          </div>
+          <div class="card rounded-3xl p-8">
+            <h2 class="text-xl font-bold mb-4"><i class="fa-solid fa-right-to-bracket mr-2"></i>Entry Channels</h2>
+            <div class="grid grid-cols-2 gap-4 text-slate-200">
+              <div class="grid-card"><i class="fa-solid fa-display mr-2"></i>Web (Dashboards/Experience)</div>
+              <div class="grid-card"><i class="fa-solid fa-mobile-screen-button mr-2"></i>Mobile</div>
+              <div class="grid-card"><i class="fa-brands fa-whatsapp mr-2"></i>WhatsApp</div>
+              <div class="grid-card"><i class="fa-solid fa-microphone mr-2"></i>Voice</div>
+              <div class="grid-card col-span-2"><i class="fa-solid fa-compass-drafting mr-2"></i>ArcGIS Pro AI Assistant with FastAPI Endpoints</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3: Security & Governance -->
+    <section class="slide" data-slide="3">
+      <div class="max-w-6xl mx-auto h-full px-6 pt-24 flex items-center">
+        <div class="w-full card rounded-3xl p-10 border border-blue-500/30">
+          <h2 class="text-2xl font-bold mb-6" style="color:#cbd5ff"><i class="fa-solid fa-shield-halved mr-3"></i>Security &amp; Governance</h2>
+          <div class="grid md:grid-cols-3 gap-6 text-sm">
+            <ul class="space-y-2">
+              <li><span class="text-blue-300">🔐</span> API Gateway + OAuth2/OIDC (ABAC-first, thin RBAC)</li>
+              <li><span class="text-blue-300">🔑</span> Secrets/KMS, scoped MCP tokens</li>
+              <li><span class="text-blue-300">🛂</span> Risk-based approvals, human-in-the-loop</li>
+              <li><span class="text-blue-300">🗄️</span> Retention, residency, consent, audit</li>
+            </ul>
+            <ul class="space-y-2">
+              <li><span class="text-blue-300">🗣️</span> Arabic/English policies &amp; NER</li>
+              <li><span class="text-blue-300">📦</span> HA/DR (RTO/RPO), backup drills</li>
+              <li><span class="text-blue-300">🧾</span> Auditability: traces &amp; immutable logs</li>
+              <li><span class="text-blue-300">🧹</span> Redaction &amp; PII scrubbing policies</li>
+            </ul>
+            <ul class="space-y-2">
+              <li><span class="text-blue-300">💸</span> Budgets, rate limits &amp; ceilings</li>
+              <li><span class="text-blue-300">🎯</span> MCP scopes per tool/action</li>
+              <li><span class="text-blue-300">🧭</span> Routing: set-based → SQL; multi-hop → KG</li>
+              <li><span class="text-blue-300">🛡️</span> Guarded edits with rollback</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4: Orchestration -->
+    <section class="slide" data-slide="4">
+      <div class="max-w-6xl mx-auto h-full px-6 pt-24 flex items-center">
+        <div class="w-full card rounded-3xl p-10 border border-orange-500/30">
+          <h2 class="text-2xl font-bold mb-4" style="color:#ffd7b0"><i class="fa-solid fa-diagram-project mr-3"></i>Orchestration (LangGraph + LangChain)</h2>
+          <p class="text-slate-300/90 mb-6 text-sm">Rule of thumb: <b>LangGraph</b> orchestrates the DAG &amp; control flow (branches, approvals, retries). Inside nodes, use <b>LangChain</b> for RAG steps, tool wrappers, and retrievers.</p>
+          <div class="grid md:grid-cols-2 gap-6 text-sm">
+            <div class="grid-card">
+              <div class="font-semibold mb-2"><i class="fa-solid fa-route mr-2"></i>LangGraph</div>
+              <ul class="list-disc list-inside text-slate-300">
+                <li>Branch &amp; merge parallel tasks (e.g., zoning + impact analysis)</li>
+                <li>Human-in-the-loop approval gates for high-risk actions</li>
+                <li>Route intents to agents via typed nodes</li>
+              </ul>
+            </div>
+            <div class="grid-card">
+              <div class="font-semibold mb-2"><i class="fa-solid fa-toolbox mr-2"></i>LangChain</div>
+              <ul class="list-disc list-inside text-slate-300">
+                <li>Wrap ArcGIS/SDI/BIM services as tools (WMS/WFS/WCS, Feature Services, IFC parsers)</li>
+                <li>Compose RAG chains (retrieve → ground → generate → verify) with citations</li>
+                <li>Build tool-calling agents executing ArcPy/GP tasks &amp; SQL/OpenCypher queries</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5: Agents Reasoning & Generation -->
+    <section class="slide" data-slide="5">
+      <div class="max-w-6xl mx-auto h-full px-6 pt-24 flex items-center">
+        <div class="w-full card rounded-3xl p-10 border border-emerald-500/30">
+          <h2 class="text-2xl font-bold mb-6" style="color:#b8f3c6"><i class="fa-solid fa-robot mr-3"></i>Agents — Reasoning &amp; Generation (GenAI &amp; GeoAI)</h2>
+          <div class="grid md:grid-cols-2 gap-6 text-sm">
+            <ul class="space-y-3">
+              <li>💬 <b>Conversation Agent</b> — chat/voice UX; explain results</li>
+              <li>📖 <b>Retrieval Agent</b> — RAG + KG; fetch docs/data; citations</li>
+              <li>🧩 <b>Planning Agent</b> — what‑if scenarios; task decomposition</li>
+            </ul>
+            <ul class="space-y-3">
+              <li>🧮 <b>Code Agent</b> — SQL/OpenCypher/ArcPy; ML pipelines</li>
+              <li>🛰️ <b>Vision/GeoAI Agent</b> — imagery/LiDAR detection &amp; change tracking</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6: Agents Integration & Validation -->
+    <section class="slide" data-slide="6">
+      <div class="max-w-6xl mx-auto h-full px-6 pt-24 flex items-center">
+        <div class="w-full card rounded-3xl p-10">
+          <h2 class="text-2xl font-bold mb-6" style="color:#b8f3c6"><i class="fa-solid fa-plug mr-3"></i>Agents — Integration &amp; Validation</h2>
+          <div class="grid md:grid-cols-3 gap-6 text-sm">
+            <div class="grid-card">🔌 <b>Tool‑Calling Agent</b> — invoke ArcGIS/SDI/DB/BIM tools with MCP scopes</div>
+            <div class="grid-card">🗺️ <b>SDI / Geospatial API Agent</b> — WMS/WFS/WCS, Feature Services, guarded edits</div>
+            <div class="grid-card">✅ <b>Audit Agent</b> — rule engine checks; compliance reports</div>
+            <div class="grid-card">🧪 <b>TestGen Agent</b> — synthetic data, data‑drift, regression tests</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7: Agents Orchestration -->
+    <section class="slide" data-slide="7">
+      <div class="max-w-6xl mx-auto h-full px-6 pt-24 flex items-center">
+        <div class="w-full card rounded-3xl p-10">
+          <h2 class="text-2xl font-bold mb-6" style="color:#ffd7b0"><i class="fa-solid fa-sitemap mr-3"></i>Agents — Orchestration</h2>
+          <div class="grid md:grid-cols-2 gap-6 text-sm">
+            <ul class="space-y-3">
+              <li>🧩 <b>Workflow Coordinator Agent</b> — manages end‑to‑end flows &amp; approvals</li>
+              <li>🛡️ <b>Router/Guard Agent</b> — intent routing, risk gates, fallback</li>
+            </ul>
+            <ul class="space-y-3">
+              <li>📐 <b>Policy Logic Agent</b> — deterministic rules blended with LLM calls</li>
+              <li>⚠️ <b>Safety Controls</b> — risk scoring → approval gates; rollback</li>
+              <li>📈 <b>Observability</b> — traces &amp; KPIs (compliance %, jobs/min, edits/day)</li>
+            </ul>
+          </div>
+          <div class="mt-6 text-xs text-slate-400">MCP Server guardrails: scoped tools (ArcGIS, SDI, DB, CDE), quotas, redaction, immutable logs.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8: Government Orchestration Examples (DAGs) -->
+    <section class="slide" data-slide="8">
+      <div class="max-w-6xl mx-auto h-full px-6 pt-24 flex items-center">
+        <div class="w-full card rounded-3xl p-10">
+          <h2 class="text-2xl font-bold mb-4"><i class="fa-solid fa-diagram-next mr-3"></i>Government Orchestration Examples (DAGs)</h2>
+          <div class="grid md:grid-cols-2 gap-6 text-sm">
+            <ul class="list-disc list-inside text-slate-300">
+              <li><b>Permit Validation (with RAG)</b>: Intent → SQL pre-filter → RAG regs + citations → Rule checks → KG traverse → Plan (change-set) → Approval → Apply → Evidence report</li>
+              <li><b>Land Registry — Title Transfer</b>: Intake → RAG title rules → KG ownership/lien traversal → SQL parcel checks → Risk score → Notary approval → Update titles &amp; audit log</li>
+              <li><b>Real Estate — AVM &amp; Listing</b>: SQL comps → ML inference → RAG disclosure rules → Violation check → Price band + compliance report</li>
+            </ul>
+            <ul class="list-disc list-inside text-slate-300">
+              <li><b>Asset Maintenance</b>: Event → SQL assets by class → KG work history → Route to crew → Work order → Notify citizen</li>
+              <li><b>Health Inspections</b>: Intake → RAG policy → SQL facilities by violations → KG complaints/penalties → Schedule → Dashboard</li>
+              <li><b>Urban Studies — Accessibility &amp; Equity</b>: Policy goals → Isochrones (5/10/15) → Demographic join → KPIs → Scenario diff → Dashboard</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9: Concrete Example — Permit Validation (LG/LC) -->
+    <section class="slide" data-slide="9">
+      <div class="max-w-6xl mx-auto h-full px-6 pt-24 flex items-center">
+        <div class="w-full card rounded-3xl p-10">
+          <h2 class="text-2xl font-bold mb-4"><i class="fa-solid fa-file-shield mr-3"></i>Concrete Example — Permit Validation (City/Municipal)</h2>
+          <div class="grid md:grid-cols-2 gap-6 text-sm text-slate-300">
+            <ul class="space-y-2">
+              <li><b>LG‑1: Router</b> — classify <code>intent=validate_permit</code>; pass <code>parcel_id</code></li>
+              <li><b>LC‑2: SQL Pre‑Filter</b> — Query Layer: <code>zoning='RES' AND area&gt;=500</code></li>
+              <li><b>LC‑3: Policy RAG</b> — retrieve zoning clauses; rule JSON + citations (EN/AR)</li>
+              <li><b>LG‑4: Rule Check</b> — deterministic checks (setbacks/FAR/coverage)</li>
+            </ul>
+            <ul class="space-y-2">
+              <li><b>LC‑5: KG Traverse</b> — openCypher: <code>(Parcel)-[:HAS_PERMIT]-&gt;(Permit) AND NOT (Permit)-[:HAS_INSPECTION]-&gt;(:Inspection)</code></li>
+              <li><b>LG‑6: Plan &amp; Diff</b> — build change‑set + evidence report</li>
+              <li><b>LG‑7: Approval Gate</b> — human-in-the-loop for high‑risk parcels</li>
+              <li><b>LC‑8/9: Apply &amp; Explain</b> — guarded write + KPIs &amp; citations</li>
+            </ul>
+          </div>
+          <div class="mt-6 text-xs text-slate-400">Legend: LG = LangGraph node (DAG/control); LC = LangChain step (RAG/tools).</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10: FastAPI Endpoints -->
+    <section class="slide" data-slide="10">
+      <div class="max-w-6xl mx-auto h-full px-6 pt-24 flex items-center">
+        <div class="w-full card rounded-3xl p-10">
+          <h2 class="text-2xl font-bold mb-6"><i class="fa-solid fa-plug-circle-bolt mr-3"></i>Integration (FastAPI) — Endpoints</h2>
+          <div class="grid md:grid-cols-2 gap-6 text-sm">
+            <div>
+<pre class="bg-slate-900/70 p-4 rounded-xl overflow-auto text-xs"><code>POST /validate_permit        # rule checks + evidence log
+POST /validate_title         # encumbrances, liens, ownership graph checks
+POST /title_search           # parcel/owner/title lookup (scoped)
+POST /avm_estimate           # AVM + comparables
+POST /listing_check          # listing compliance (disclosures, policy)
+POST /schedule_maintenance   # prioritize assets, create work order
+POST /prioritize_inspections # rank facilities by risk
+POST /incident_route         # responders & routes
+POST /impact_assessment      # demand estimates (traffic/utilities)
+POST /plan_only              # dry-run
+POST /scenario_diff          # baseline vs proposal
+POST /submit_edits           # approval + MCP scope
+POST /policy_explain         # citations & path</code></pre>
+            </div>
+            <div>
+              <div class="text-slate-300/90">Example curl (mock):</div>
+<pre class="bg-slate-900/70 p-4 rounded-xl overflow-auto text-xs"><code>curl -X POST https://example.gov/validate_permit \
+  -H "Content-Type: application/json" \
+  -d '{"parcel_id":"12345"}'</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11: ArcGIS Capabilities -->
+    <section class="slide" data-slide="11">
+      <div class="max-w-6xl mx-auto h-full px-6 pt-24 flex items-center">
+        <div class="w-full card rounded-3xl p-10">
+          <h2 class="text-2xl font-bold mb-6"><i class="fa-solid fa-map-location-dot mr-3"></i>ArcGIS Capabilities — Data &amp; Tools</h2>
+          <div class="grid md:grid-cols-2 gap-6 text-sm">
+            <ul class="space-y-2">
+              <li>🧰 GP Tools / GPServer</li>
+              <li>🕸️ Knowledge Graph (openCypher)</li>
+              <li>🧮 Query Layers (SQL)</li>
+              <li>🗺️ Network Analyst (Service Area/Isochrones)</li>
+              <li>📈 Spatial Statistics (Hot Spot, Moran’s I)</li>
+              <li>🕒 Space Time Pattern Mining</li>
+            </ul>
+            <ul class="space-y-2">
+              <li>🌐 SDI: WMS/WFS/WCS</li>
+              <li>✅ Data Reviewer (DQ gates)</li>
+              <li>⚡ Velocity / Kafka (streams &amp; events)</li>
+              <li>🖥️ Portal/Server HA + tile caches</li>
+              <li>🧬 Time‑aware versions &amp; lineage</li>
+              <li>🧱 Enterprise GDB &amp; guarded Feature Services</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12: Data Plane -->
+    <section class="slide" data-slide="12">
+      <div class="max-w-6xl mx-auto h-full px-6 pt-24 flex items-center">
+        <div class="w-full card rounded-3xl p-10">
+          <h2 class="text-2xl font-bold mb-4"><i class="fa-solid fa-database mr-3"></i>Data Plane — Storage &amp; Models</h2>
+          <div class="grid md:grid-cols-3 gap-6 text-sm">
+            <ul class="space-y-2">
+              <li><b>Authoritative Stores</b> — Enterprise GDB; Land Registry titles, encumbrances, transactions</li>
+              <li><b>Feature Services</b> — Guarded writes; contracts</li>
+            </ul>
+            <ul class="space-y-2">
+              <li><b>Spatial ML</b> — Feature Store (by <code>entity_id</code>), model registry, batch &amp; online inference</li>
+              <li><b>Imagery/LiDAR</b> — Detection &amp; change tracking; lifecycle buckets</li>
+            </ul>
+            <ul class="space-y-2">
+              <li><b>Ops &amp; Scale</b> — Velocity/Kafka, HA caches, version tags</li>
+              <li><b>Catalog</b> — lineage &amp; data contracts</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13: Query Layers & Knowledge Graph code -->
+    <section class="slide" data-slide="13">
+      <div class="max-w-6xl mx-auto h-full px-6 pt-24 flex items-center">
+        <div class="w-full card rounded-3xl p-10">
+          <h2 class="text-2xl font-bold mb-6"><i class="fa-solid fa-code mr-3"></i>Query Layers &amp; Knowledge Graph</h2>
+          <div class="grid md:grid-cols-2 gap-6">
+<pre class="bg-slate-900/70 p-4 rounded-xl overflow-auto text-xs"><code>-- SQL (Query Layers)
+SELECT parcel_id, area_m2, zoning, title_status
+FROM cadastral_parcels
+WHERE municipality = 'City/MunicipalArea'
+  AND title_status = 'Active'
+  AND area_m2 &gt;= 500;
+</code></pre>
+<pre class="bg-slate-900/70 p-4 rounded-xl overflow-auto text-xs"><code>// openCypher (Knowledge Graph)
+MATCH (o:Owner)-[r:OWNS]-&gt;(p:Parcel)
+WHERE r.share &gt;= 0.5
+  AND NOT (p)-[:HAS_LIENS]-&gt;(:Lien {status:'Active'})
+RETURN p.parcelId AS parcelId, o.ownerId AS ownerId, r.share AS share;
+</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14: Decision & Delivery Layer -->
+    <section class="slide" data-slide="14">
+      <div class="max-w-6xl mx-auto h-full px-6 pt-24 flex items-center">
+        <div class="w-full card rounded-3xl p-10">
+          <h2 class="text-2xl font-bold mb-6" style="color:#e9d5ff"><i class="fa-solid fa-chart-line mr-3"></i>Decision &amp; Delivery Layer — Outcomes</h2>
+          <div class="grid md:grid-cols-2 gap-6 text-sm">
+            <ul class="space-y-2">
+              <li>Dashboards (ArcGIS Dashboards / Experience)</li>
+              <li>Policy Explain packets (citations, rule paths, KG proof)</li>
+              <li>Scenario diff maps &amp; KPI deltas</li>
+            </ul>
+            <ul class="space-y-2">
+              <li>Reports (PDFs, letters), Notifications (Email/SMS/WhatsApp)</li>
+              <li>Work orders (EAM/CRM via webhooks)</li>
+              <li>Open data &amp; exports (GeoJSON, CSV/Excel, GeoPackage)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15: DevOps & Release Management -->
+    <section class="slide" data-slide="15">
+      <div class="max-w-6xl mx-auto h-full px-6 pt-24 flex items-center">
+        <div class="w-full card rounded-3xl p-10">
+          <h2 class="text-2xl font-bold mb-6"><i class="fa-solid fa-gears mr-3"></i>DevOps &amp; Release Management</h2>
+          <div class="grid md:grid-cols-2 gap-6 text-sm">
+            <ul class="space-y-2">
+              <li>IaC (Terraform / ArcGIS Admin API)</li>
+              <li>CI/CD for agents, tools &amp; FastAPI (staging → prod)</li>
+              <li>Data pipelines (CDC to KG &amp; RAG index refresh)</li>
+            </ul>
+            <ul class="space-y-2">
+              <li>TestGen in CI (golden datasets &amp; regression tests)</li>
+              <li>Cost &amp; model routing</li>
+              <li>Backup/restore drills with version tags</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16: Closing -->
+    <section class="slide" data-slide="16">
+      <div class="max-w-6xl mx-auto h-full px-6 pt-24 flex items-center">
+        <div class="w-full card rounded-3xl p-10 text-center">
+          <h2 class="text-3xl md:text-4xl font-extrabold">Transforming Governance with Geospatial Agentic Architecture</h2>
+          <p class="mt-6 text-slate-300">© 2025 Aduri Sreenivas · MicroCenter Gulf</p>
+          <p class="mt-2 text-slate-500 text-sm">This slide-style page is ready for GitHub Pages. Print to PDF to export a static deck.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Keyboard & Swipe navigation + numbered buttons + counter -->
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    function idx(){return Math.max(0, Math.min(slides.length-1, (parseInt(location.hash.replace('#',''))||1)-1));}
+    function highlight(i){
+      const nav=document.getElementById('nav');
+      [...nav.children].forEach((d,ix)=> d.classList.toggle('active', ix===i));
+      const help=document.getElementById('help');
+      if(help){ help.textContent = (i+1) + ' / ' + slides.length + ' — use ← → keys or swipe'; }
+    }
+    function show(i){
+      slides.forEach((s,ix)=>s.classList.toggle('active', ix===i));
+      location.hash = (i+1);
+      highlight(i);
+    }
+    // Build numbered nav buttons
+    const nav = document.getElementById('nav');
+    slides.forEach((s, i)=>{
+      const a = document.createElement('a');
+      a.href = '#' + (i+1);
+      a.title = 'Slide ' + (i+1);
+      a.textContent = (i+1);
+      a.className = 'dot-btn';
+      if(i===0) a.classList.add('active');
+      nav.appendChild(a);
+    });
+    // Keyboard
+    window.addEventListener('keydown', (e)=>{
+      if(e.key==='ArrowRight' || e.key==='PageDown') show(Math.min(slides.length-1, idx()+1));
+      if(e.key==='ArrowLeft'  || e.key==='PageUp')   show(Math.max(0, idx()-1));
+      if(e.key==='Home') show(0);
+      if(e.key==='End')  show(slides.length-1);
+    });
+    // Click on nav buttons
+    nav.addEventListener('click', (e)=>{
+      if(e.target.tagName==='A') setTimeout(()=>show(idx()), 0);
+    });
+    // Swipe
+    let sx=null;
+    window.addEventListener('touchstart', e=>{sx=e.changedTouches[0].clientX;});
+    window.addEventListener('touchend', e=>{if(sx===null) return; const dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>40){ dx<0?show(Math.min(slides.length-1, idx()+1)):show(Math.max(0, idx()-1)); } sx=null;});
+    // Init
+    window.addEventListener('load', ()=>show(idx()));
+  </script>
+</body>
+</html>
