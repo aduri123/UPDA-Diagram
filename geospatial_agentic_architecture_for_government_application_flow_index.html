@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Geospatial Agentic Architecture for Government — Application Flow</title>
+  <meta name="description" content="ArcGIS, MCP, RAG, Knowledge Graph, SDI — Application Flow across Government Domains" />
+  <style>
+    :root{
+      --bg:#0b0f14;            /* deep slate */
+      --panel:#121821;         /* panels */
+      --muted:#1b2430;         /* subtle outlines */
+      --ink:#e6eef8;           /* text */
+      --ink-soft:#b7c4d6;      /* soft text */
+      --brand:#6ad3ff;         /* cyan */
+      --brand-2:#8b7dff;       /* violet */
+      --brand-3:#5ee39b;       /* mint */
+      --warn:#ffc857;          /* amber */
+      --danger:#ff7a7a;        /* coral */
+      --ok:#76e0a6;            /* green */
+      --grid-gap:16px;
+      --radius:16px;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Inter, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:radial-gradient(1200px 600px at 20% -10%, #15202b88, transparent),
+               radial-gradient(1000px 500px at 120% 10%, #1a103888, transparent), var(--bg);
+      color:var(--ink); font-family:var(--sans);
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    }
+    a{color:var(--brand)}
+    .wrap{max-width:1280px; margin-inline:auto; padding:28px 20px 80px}
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(8px);
+      background:linear-gradient(180deg, rgba(11,15,20,.9), rgba(11,15,20,.65));
+      border-bottom:1px solid #1d2733; box-shadow:0 6px 20px rgba(0,0,0,.25);
+    }
+    header .bar{max-width:1280px; margin:0 auto; padding:14px 20px; display:flex; gap:16px; align-items:center;}
+    .logo{display:grid; place-items:center; width:36px; height:36px; border-radius:10px; background:
+      conic-gradient(from 210deg, var(--brand), var(--brand-2), var(--brand-3)); box-shadow:inset 0 0 0 4px #0b0f14aa}
+    h1{font-size:clamp(18px, 2.2vw, 26px); margin:0; letter-spacing:.2px}
+    .sub{font-size:12px; color:var(--ink-soft)}
+    .chip{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border:1px solid #223040; background:#10161f}
+    .chips{display:flex; flex-wrap:wrap; gap:8px}
+    .hero{display:grid; gap:12px; padding:18px 0 28px}
+
+    /* Grid canvas */
+    .grid{display:grid; gap:var(--grid-gap)}
+    @media (min-width: 1000px){
+      .grid.flow{grid-template-columns: 1.1fr 1.6fr .9fr}
+    }
+    @media (max-width: 999.9px){
+      .grid.flow{grid-template-columns:1fr}
+    }
+
+    .panel{
+      background:linear-gradient(180deg, #111824, #0d141d); border:1px solid #1f2a38;
+      border-radius:var(--radius); box-shadow:var(--shadow); position:relative; overflow:hidden;
+    }
+    .panel .hd{display:flex; align-items:center; justify-content:space-between; padding:14px 14px 0 14px}
+    .panel .hd h3{margin:0; font-size:15px; letter-spacing:.3px}
+    .panel .bd{padding:14px}
+    .panel .ft{padding:10px 14px; border-top:1px dashed #263445; font-size:12px; color:var(--ink-soft)}
+
+    .pill{font-size:11px; padding:6px 10px; border-radius:999px; border:1px solid #2a394e; background:#0e1621}
+    .tag{font-size:11px; padding:3px 8px; border-radius:999px; background:#142033; border:1px solid #22324a; color:#cde3ff}
+    .row{display:flex; gap:10px; flex-wrap:wrap}
+    .k{color:#9cc8ff}
+
+    .list{display:grid; gap:10px}
+    .list li{list-style:none; display:flex; gap:10px; align-items:flex-start; border:1px solid #223047; background:#0f1722; padding:10px 12px; border-radius:12px}
+    .list svg{flex:0 0 18px; margin-top:2px}
+
+    /* swimlane arrows */
+    .arrow{position:absolute; inset:auto auto 10px 14px; font:600 11px var(--sans); color:#a6b8cf}
+
+    /* code blocks */
+    pre{margin:0; padding:10px 12px; background:#0a121b; border:1px solid #203046; border-radius:12px; overflow:auto}
+    code{font-family:var(--mono); font-size:12px; color:#d2f0ff}
+
+    .grid.cols-2{grid-template-columns:1fr 1fr}
+    @media (max-width: 900px){.grid.cols-2{grid-template-columns:1fr}}
+
+    .legend{display:flex; flex-wrap:wrap; gap:8px; font-size:12px}
+    .legend .lg{display:flex; align-items:center; gap:6px; padding:6px 10px; border:1px solid #25344a; border-radius:999px}
+    .lg .sw{width:14px; height:14px; border-radius:4px}
+    .sw.gen{background:linear-gradient(45deg,var(--brand),var(--brand-2))}
+    .sw.sys{background:linear-gradient(45deg,#3dd68c,#6ad3ff)}
+    .sw.sec{background:linear-gradient(45deg,#ffc857,#ff7a7a)}
+    .sw.orc{background:linear-gradient(45deg,#8b7dff,#6ad3ff)}
+    .sw.arc{background:linear-gradient(45deg,#5ee39b,#6ad3ff)}
+
+    footer{margin-top:28px; color:#8fa8c4; font-size:12px; text-align:center}
+    .credit{opacity:.9}
+
+    .title{
+      font-size:clamp(20px, 2.6vw, 34px); font-weight:800; letter-spacing:.2px; margin:6px 0 2px
+    }
+    .subtitle{color:#cfe8ff; opacity:.9; font-size:13px}
+    .byline{margin-top:12px; font-weight:600; color:#bbd0e8}
+
+    .divider{height:1px; background:linear-gradient(90deg, transparent, #2a3a4f, transparent); margin:12px 0}
+
+    .sticky-note{border-left:4px solid var(--brand-3); padding-left:10px; color:#cceedd; font-size:12.5px}
+
+    .callout{border:1px solid #244; background:linear-gradient(180deg,#0e1a24,#0b1219); padding:10px 12px; border-radius:12px; color:#cfe6ff}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bar">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <div class="title">Geospatial Agentic Architecture for Government — Application Flow</div>
+        <div class="subtitle">Covers ArcGIS, MCP, RAG, Knowledge Graph, SDI — applied across Urban Analytics, Land Registry, Real Estate, Permits, Public Works, Inspections, Citizen Services.</div>
+        <div class="byline">Aduri Sreenivas · MicroCenter Gulf</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- Legend -->
+    <div class="legend" aria-label="Legend">
+      <div class="lg"><span class="sw gen"></span> GenAI & GeoAI Agents (Reasoning & Generation)</div>
+      <div class="lg"><span class="sw sys"></span> System & Data Integration Agents (Validation & Connectivity)</div>
+      <div class="lg"><span class="sw sec"></span> Security & Governance</div>
+      <div class="lg"><span class="sw orc"></span> Orchestration & MCP</div>
+      <div class="lg"><span class="sw arc"></span> ArcGIS & Data Plane</div>
+    </div>
+
+    <section class="hero">
+      <div class="chips">
+        <span class="chip">Urban Analytics & Policy</span>
+        <span class="chip">Urban Studies (morphology, accessibility, equity)</span>
+        <span class="chip">Land Registry (Cadastre & Titles)</span>
+        <span class="chip">Real Estate (AVM & Listings)</span>
+        <span class="chip">Urban Planning & Permits</span>
+        <span class="chip">Public Works & Assets</span>
+        <span class="chip">Health & Safety Inspections</span>
+        <span class="chip">Emergency & Incident Response</span>
+        <span class="chip">Finance & Revenues</span>
+        <span class="chip">Citizen Services – Complaints / Tawasul</span>
+        <span class="chip">Environment & Waste</span>
+        <span class="chip">Transportation & Traffic</span>
+        <span class="chip">Utilities (Water/Power)</span>
+      </div>
+    </section>
+
+    <!-- Channels & Security & Orchestration columns layout -->
+    <section class="grid flow" aria-label="Application Flow">
+      <!-- Channels -->
+      <div class="panel">
+        <div class="hd"><h3>Channels</h3><span class="tag">Entry</span></div>
+        <div class="bd">
+          <ul class="list">
+            <li>📦 Web (Dashboards/Experience)</li>
+            <li>📱 Mobile</li>
+            <li>💬 WhatsApp</li>
+            <li>🎙️ Voice</li>
+            <li>🧭 ArcGIS Pro AI Assistant with FastAPI Endpoints</li>
+          </ul>
+        </div>
+        <div class="arrow">→ Security & Governance</div>
+      </div>
+
+      <!-- Security & Governance -->
+      <div class="panel" style="border-color:#3a2;">
+        <div class="hd"><h3>Security & Governance</h3><span class="tag">Trust</span></div>
+        <div class="bd">
+          <div class="grid cols-2">
+            <ul class="list">
+              <li>🔐 API Gateway + OAuth2/OIDC (ABAC-first, thin RBAC)</li>
+              <li>🔑 Secrets/KMS, scoped MCP tokens</li>
+              <li>🛂 Risk-based approvals, human-in-the-loop</li>
+              <li>🗄️ Retention, residency, consent, audit</li>
+              <li>🗣️ Arabic/English policies & NER</li>
+            </ul>
+            <ul class="list">
+              <li>📦 HA/DR (RTO/RPO), backup drills</li>
+              <li>🧾 Auditability: traces & immutable logs</li>
+              <li>🧹 Redaction & PII scrubbing policies</li>
+              <li>💸 Budgets, rate limits & ceilings</li>
+              <li>🎯 MCP scopes per tool/action</li>
+            </ul>
+          </div>
+        </div>
+        <div class="arrow">→ Orchestration (LangGraph + LangChain)</div>
+      </div>
+
+      <!-- Orchestration -->
+      <div class="panel" style="border-color:#36c;">
+        <div class="hd"><h3>Orchestration (LangGraph + LangChain)</h3><span class="tag">Control</span></div>
+        <div class="bd">
+          <div class="callout"><strong>Rule of thumb</strong>: Use <span class="k">LangGraph</span> to orchestrate the DAG & control flow (branches, approvals, retries). Inside nodes, use <span class="k">LangChain</span> for RAG steps, tool wrappers, retrievers. LangChain can also orchestrate simple chains; RAG can be built without it—the split keeps things clear.</div>
+          <div class="divider"></div>
+          <h4 style="margin:8px 0 6px">LangGraph</h4>
+          <ul class="list">
+            <li>🔀 Branch & merge parallel tasks (e.g., zoning check + impact analysis) then reconcile.</li>
+            <li>🧍 Human-in-the-loop approval gates for high-risk actions (permits/overrides).</li>
+            <li>🧭 Route intents to agents (Planning, Vision, Code, Conversation) via typed nodes.</li>
+          </ul>
+          <h4 style="margin:10px 0 6px">LangChain</h4>
+          <ul class="list">
+            <li>🧰 Wrap ArcGIS/SDI/BIM services as tools (WMS/WFS/WCS, Feature Services, IFC parsers).</li>
+            <li>📚 Compose RAG chains (retrieve → ground → generate → verify) for policy answers.</li>
+            <li>🛠️ Build tool-calling agents that execute ArcPy/GP tasks and SQL/OpenCypher queries.</li>
+          </ul>
+        </div>
+        <div class="ft">Outputs → Agents → ArcGIS & Data Plane</div>
+      </div>
+    </section>
+
+    <!-- Agents lanes -->
+    <section class="grid cols-2" style="margin-top:var(--grid-gap)">
+      <div class="panel" style="border-color:#4df;">
+        <div class="hd"><h3>Reasoning & Generation (GenAI & GeoAI)</h3><span class="tag">Agents</span></div>
+        <div class="bd">
+          <ul class="list">
+            <li>💬 <strong>Conversation Agent</strong> — chat/voice UX; explain results.</li>
+            <li>📖 <strong>Retrieval Agent (RAG + KG)</strong> — fetch docs/datasets; ground answers with citations.</li>
+            <li>🧩 <strong>Planning Agent</strong> — what‑if scenarios; task decomposition & policy steps.</li>
+            <li>🧮 <strong>Code Agent</strong> — SQL/OpenCypher/ArcPy; ML pipelines for valuation/demand.</li>
+            <li>🛰️ <strong>Vision/GeoAI Agent</strong> — imagery/LiDAR detection & change tracking.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="panel" style="border-color:#5f8;">
+        <div class="hd"><h3>Integration & Validation (System/Data)</h3><span class="tag">Agents</span></div>
+        <div class="bd">
+          <ul class="list">
+            <li>🔌 <strong>Tool‑Calling Agent</strong> — invoke ArcGIS/SDI/DB/BIM tools with MCP scopes.</li>
+            <li>🗺️ <strong>SDI / Geospatial API Agent</strong> — WMS/WFS/WCS, Feature Services, guarded edits.</li>
+            <li>✅ <strong>Audit Agent</strong> — rule engine checks; compliance reports.</li>
+            <li>🧪 <strong>TestGen Agent</strong> — synthetic data, data‑drift, regression tests.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Orchestration agents & safety -->
+    <section class="grid cols-2" style="margin-top:var(--grid-gap)">
+      <div class="panel" style="border-color:#8b7dff;">
+        <div class="hd"><h3>Orchestration Agents</h3><span class="tag">Flow</span></div>
+        <div class="bd">
+          <ul class="list">
+            <li>🧩 <strong>Workflow Coordinator Agent</strong> — manages end‑to‑end flows & approvals.</li>
+            <li>🛡️ <strong>Router/Guard Agent</strong> — intent routing, risk gates, fallback path.</li>
+            <li>📐 <strong>Policy Logic Agent</strong> — deterministic rules blended with LLM calls.</li>
+          </ul>
+          <div class="divider"></div>
+          <ul class="list">
+            <li>⚠️ <strong>Safety Controls</strong> — Risk scoring → approval gates; guarded edits with rollback.</li>
+            <li>📈 <strong>Observability</strong> — Tracing per agent/tool; KPIs: compliance %, jobs/min, edits/day.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="panel" style="border-color:#6ad3ff;">
+        <div class="hd"><h3>MCP Server</h3><span class="tag">Guard</span></div>
+        <div class="bd">
+          <ul class="list">
+            <li>🎯 Scoped tools: ArcGIS, SDI, DB, CDE</li>
+            <li>💸 Budgets/quotas; rate limits & ceilings</li>
+            <li>🧹 Redaction & PII policies</li>
+            <li>🧾 Auditability: traces & immutable logs</li>
+          </ul>
+        </div>
+        <div class="ft">Routing rule → set‑based → SQL; relationship/multi‑hop → KG</div>
+      </div>
+    </section>
+
+    <!-- Government orchestration examples -->
+    <section class="panel" style="margin-top:var(--grid-gap)">
+      <div class="hd"><h3>Government Orchestration Examples</h3><span class="tag">DAGs</span></div>
+      <div class="bd">
+        <div class="grid cols-2">
+          <ul class="list">
+            <li><strong>Permit Validation DAG (with RAG)</strong> — Intent → SQL pre-filter (eligible parcels/applicants) → RAG grounding (retrieve applicable regulations + citations) → Rule Engine checks → KG traverse (missing inspections/conflicts) → Plan (change-set) → Approval gate → Apply edits → Evidence report.</li>
+            <li><strong>Land Registry — Title Transfer Validation</strong> — Intake (new transfer) → RAG (title rules, encumbrance clauses) → KG ownership & lien traversal → SQL parcel/lot checks (area, zoning) → Risk score → Notary approval gate → Update titles & audit log.</li>
+            <li><strong>Real Estate — AVM & Listing Compliance</strong> — SQL comparable sales & features → Code Agent ML inference (AVM) → RAG disclosure/advertising rules → Listing check (violations) → Publish price band + compliance report.</li>
+          </ul>
+          <ul class="list">
+            <li><strong>Asset Maintenance Scheduling</strong> — Event (sensor alert or complaint) → SQL filter assets by class/condition → KG fetch work history & dependencies → Route to crew (capacity, location) → Generate work order → Notify citizen.</li>
+            <li><strong>Health Inspection Prioritization</strong> — Intake (restaurant permits) → RAG policy fetch (risk scoring) → SQL candidate facilities by violations → KG join complaints & past penalties → Schedule inspections → Publish dashboard.</li>
+            <li><strong>Urban Studies — Accessibility & Equity</strong> — Intent → RAG policy goals → Network isochrones (5/10/15 min walk) → Join demographics → KPIs (% within 15 min, access Gini, land‑use mix entropy) → Scenario diff → Dashboard & report.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Concrete example: Permit Validation -->
+    <section class="panel" style="margin-top:var(--grid-gap)">
+      <div class="hd"><h3>📌 Concrete Example — Permit Validation (City/Municipal)</h3><span class="tag">LG/LC</span></div>
+      <div class="bd">
+        <ol class="list">
+          <li><strong>LG‑1: Router (LangGraph)</strong> — classify <code>intent=validate_permit</code>; pass <code>parcel_id</code>.</li>
+          <li><strong>LC‑2: SQL Pre‑Filter (LangChain tool)</strong> — Query Layer: candidate parcels (<code>zoning='RES' AND area&gt;=500</code>).</li>
+          <li><strong>LC‑3: Policy RAG (LangChain)</strong> — retrieve zoning clauses; output rule JSON + citations (Arabic/English).</li>
+          <li><strong>LG‑4: Rule Check Node (LangGraph)</strong> — deterministic checks using rule JSON (setbacks/FAR/coverage).</li>
+          <li><strong>LC‑5: KG Traverse (LangChain tool)</strong> — openCypher: <em>(Parcel)‑[:HAS_PERMIT]→(Permit) AND NOT (Permit)‑[:HAS_INSPECTION]→(:Inspection)</em>.</li>
+          <li><strong>LG‑6: Plan & Diff (LangGraph)</strong> — build change‑set (flags, annotations) + generate evidence report.</li>
+          <li><strong>LG‑7: Approval Gate (LangGraph)</strong> — human‑in‑the‑loop for high‑risk parcels.</li>
+          <li><strong>LC‑8: Apply (LangChain tool)</strong> — guarded write to Feature Service (MCP scope enforced).</li>
+          <li><strong>LC‑9: Explain (LangChain)</strong> — return KPIs, citations, rule path, and KG proof.</li>
+        </ol>
+        <div class="sticky-note">Legend: <strong>LG</strong> = LangGraph node (DAG/control); <strong>LC</strong> = LangChain step (RAG/tools).</div>
+      </div>
+    </section>
+
+    <!-- Integration (FastAPI) -->
+    <section class="panel" style="margin-top:var(--grid-gap)">
+      <div class="hd"><h3>Integration (FastAPI)</h3><span class="tag">Endpoints</span></div>
+      <div class="bd">
+        <div class="grid cols-2">
+          <ul class="list">
+            <li>POST <code>/validate_permit</code> → rule checks + evidence log</li>
+            <li>POST <code>/validate_title</code> → encumbrances, liens, ownership graph checks</li>
+            <li>POST <code>/title_search</code> → parcel/owner/title lookup (scoped)</li>
+            <li>POST <code>/avm_estimate</code> → automated valuation model + comparables</li>
+            <li>POST <code>/listing_check</code> → listing compliance (disclosures, policy)</li>
+            <li>POST <code>/schedule_maintenance</code> → prioritize assets, create work order</li>
+          </ul>
+          <ul class="list">
+            <li>POST <code>/prioritize_inspections</code> → rank facilities by risk</li>
+            <li>POST <code>/incident_route</code> → recommend responders & routes</li>
+            <li>POST <code>/impact_assessment</code> → demand estimates (traffic/utilities/capacity)</li>
+            <li>POST <code>/plan_only</code> (dry‑run)</li>
+            <li>POST <code>/scenario_diff</code> → baseline vs proposal</li>
+            <li>POST <code>/submit_edits</code> → approval + MCP scope</li>
+            <li>POST <code>/policy_explain</code> → citations & path</li>
+            <li>POST <code>/assess_accessibility</code> → access KPIs (15‑min coverage, equity)</li>
+            <li>POST <code>/compute_walkshed</code> → network isochrones (5/10/15 min)</li>
+            <li>POST <code>/equity_metrics</code> → demographics joins & indices</li>
+            <li>POST <code>/data_quality/run</code> (Reviewer)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ArcGIS Capabilities -->
+    <section class="panel" style="margin-top:var(--grid-gap)">
+      <div class="hd"><h3>ArcGIS Capabilities</h3><span class="tag">Data & Tools</span></div>
+      <div class="bd">
+        <div class="grid cols-2">
+          <ul class="list">
+            <li>🧰 GP Tools / GPServer</li>
+            <li>🕸️ Knowledge Graph (openCypher)</li>
+            <li>🧮 Query Layers (SQL)</li>
+            <li>🗺️ Network Analyst (Service Area/Isochrones)</li>
+            <li>📈 Spatial Statistics (Hot Spot, Moran’s I)</li>
+            <li>🕒 Space Time Pattern Mining</li>
+            <li>🌐 SDI: WMS/WFS/WCS</li>
+            <li>✅ Data Reviewer (DQ gates)</li>
+          </ul>
+          <ul class="list">
+            <li>⚡ Velocity / Kafka (streams & events)</li>
+            <li>🖥️ Portal/Server HA + tile caches</li>
+            <li>🧬 Time‑aware versions & lineage</li>
+            <li>🧱 Enterprise GDB (authoritative store)</li>
+            <li>🧾 Feature Services (guarded writes)</li>
+            <li>📚 Catalog + lineage + data contracts</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Data Plane details -->
+    <section class="panel" style="margin-top:var(--grid-gap)">
+      <div class="hd"><h3>Data Plane</h3><span class="tag">Storage & Models</span></div>
+      <div class="bd">
+        <div class="grid cols-2">
+          <ul class="list">
+            <li><strong>Authoritative Stores</strong> — Enterprise GDB; Land Registry: titles, encumbrances, transactions.</li>
+            <li><strong>Feature Services</strong> — Guarded writes; contracts.</li>
+            <li><strong>Spatial ML</strong> — Feature Store (by <code>entity_id</code>: parcel_id, asset_id, facility_id, case_id); model registry & experiments; batch & online inference.</li>
+            <li><strong>Imagery / LiDAR</strong> — Detection & change tracking; retention buckets & lifecycle.</li>
+            <li><strong>Ops & Scale</strong> — Velocity/Kafka, HA caches, version tags.</li>
+          </ul>
+          <div>
+            <h4>Query Layers & Knowledge Graph</h4>
+            <pre><code>-- SQL (Query Layers)
+SELECT parcel_id, area_m2, zoning, title_status
+FROM cadastral_parcels
+WHERE municipality = 'City/MunicipalArea'
+  AND title_status = 'Active'
+  AND area_m2 &gt;= 500;
+</code></pre>
+            <div style="height:8px"></div>
+            <pre><code>// openCypher (Knowledge Graph)
+MATCH (o:Owner)-[r:OWNS]-&gt;(p:Parcel)
+WHERE r.share &gt;= 0.5
+  AND NOT (p)-[:HAS_LIENS]-&gt;(:Lien {status:'Active'})
+RETURN p.parcelId AS parcelId, o.ownerId AS ownerId, r.share AS share;
+</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Decision & Delivery Layer -->
+    <section class="panel" style="margin-top:var(--grid-gap)">
+      <div class="hd"><h3>Decision & Delivery Layer</h3><span class="tag">Outcomes</span></div>
+      <div class="bd">
+        <div class="grid cols-2">
+          <ul class="list">
+            <li><strong>Decisions & KPIs</strong> — Scenario dashboards (ArcGIS Dashboards / Experience); Policy Explain packets (citations, rule paths, KG proof); Scenario diff maps & KPI deltas.</li>
+            <li><strong>Delivery & Interop</strong> — Reports (PDFs, permit/title letters); Notifications (Email/SMS/WhatsApp; webhooks); Work orders (EAM/CRM via webhooks); Open data & exports (GeoJSON, CSV/Excel, GeoPackage).</li>
+          </ul>
+          <ul class="list">
+            <li><strong>DevOps & Release Management</strong> — IaC (Terraform / ArcGIS Admin API); CI/CD for agents, tools & FastAPI (staging → prod); Data pipelines (CDC to KG & RAG index refresh); TestGen in CI (golden datasets & regression tests); Cost & model routing; Backup/restore drills with version tags.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="credit">© 2025 Aduri Sreenivas · MicroCenter Gulf</div>
+    </footer>
+
+  </main>
+</body>
+</html>
