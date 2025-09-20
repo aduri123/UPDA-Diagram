@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Master Process Flow — Geospatial Agentic Architecture for Government</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121830;
+      --panel-2: #0f1428;
+      --text: #e8ecf7;
+      --muted: #a9b3c9;
+      --brand: #6aa6ff;
+      --accent: #8ef0c8;
+      --warn: #ffd166;
+      --danger: #ff7575;
+      --ok: #9be27e;
+      --border: #26314f;
+      --code: #0b1126;
+      --chip: #1a2242;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --w: min(1180px, 92vw);
+    }
+    html,body{background:var(--bg); color:var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji"; line-height:1.55}
+    *{box-sizing:border-box}
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{width:var(--w); margin: 24px auto 80px;}
+    header.hero{position:sticky; top:0; z-index:5; backdrop-filter: blur(14px); background: linear-gradient(180deg, rgba(11,16,32,.88), rgba(11,16,32,.55)); border-bottom:1px solid var(--border)}
+    header .inner{width:var(--w); margin:0 auto; padding: 14px 0; display:flex; align-items:center; gap:16px}
+    .logo{width:44px; height:44px; display:grid; place-items:center; background:linear-gradient(135deg,var(--brand),#9ec7ff); color:#00122e; font-weight:800; border-radius:12px; box-shadow:var(--shadow)}
+    h1{font-size: clamp(22px, 3vw, 38px); margin:0}
+    .sub{color:var(--muted); font-size:14px}
+    .chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px}
+    .chip{background: var(--chip); border:1px solid var(--border); color:var(--text); padding:6px 12px; border-radius:999px; font-size:13px}
+
+    .grid{display:grid; grid-template-columns: 1.2fr .8fr; gap:18px}
+    @media (max-width: 980px){ .grid{grid-template-columns: 1fr} }
+
+    .card{background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow)}
+    .card h2, .card h3{margin:0 0 8px}
+    .card .hd{display:flex; align-items:center; justify-content:space-between; padding:18px 20px; border-bottom:1px solid var(--border)}
+    .card .bd{padding:16px 20px}
+
+    .toc{display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px}
+    @media (max-width: 640px){ .toc{grid-template-columns: 1fr} }
+    .toc a{display:block; background:var(--chip); border:1px solid var(--border); padding:10px 12px; border-radius:12px}
+
+    ol.steps{counter-reset: step; list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:14px}
+    ol.steps li{background:linear-gradient(180deg,#121a3a,#0e1530); border:1px solid var(--border); padding:14px 14px 14px 52px; border-radius: 14px; position:relative}
+    ol.steps li::before{counter-increment: step; content: counter(step); position:absolute; left:12px; top:12px; width:28px; height:28px; border-radius:9px; display:grid; place-items:center; background:linear-gradient(135deg,var(--accent),#b9ffe5); color:#001d14; font-weight:700; border:1px solid #7bdab7}
+    .tag{font-size:12px; padding:2px 8px; border-radius: 999px; border:1px solid var(--border); background:#0f1734; color:var(--muted)}
+    .kpi{display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:8px}
+    .kpi .pill{background:var(--chip); border:1px solid var(--border); border-radius:999px; padding:8px 12px; font-size:13px; color:var(--muted)}
+
+    .code{background:var(--code); border:1px solid var(--border); border-radius:14px; padding:12px 14px; overflow:auto; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size:13.5px}
+
+    .cols{display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:14px}
+    @media (max-width: 880px){ .cols{grid-template-columns: 1fr} }
+
+    footer{margin-top:30px; color:var(--muted); font-size:13px; text-align:center}
+
+    /* badges */
+    .badges{display:flex; flex-wrap:wrap; gap:8px}
+    .badge{padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:#0e1732; font-size:12px}
+
+    .callout{border:1px dashed var(--border); background:#0d1632; padding:12px 14px; border-radius:12px; color:var(--muted)}
+
+    .hdr-note{font-size:12.5px; color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="inner">
+      <div class="logo" aria-hidden>GA</div>
+      <div>
+        <h1>Master Process Flow — Geospatial Agentic Architecture for Government</h1>
+        <div class="hdr-note">Covers ArcGIS, MCP, RAG, Knowledge Graph, SDI — applied across Urban Analytics, Land Registry, Real Estate, Permits, Public Works, Inspections, Citizen Services.</div>
+        <div class="chips">
+          <span class="chip">GenAI & GeoAI Agents</span>
+          <span class="chip">System & Data Integration Agents</span>
+          <span class="chip">Security & Governance</span>
+          <span class="chip">Orchestration & MCP</span>
+          <span class="chip">ArcGIS & Data Plane</span>
+          <span class="chip">Arabic/English</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="grid">
+      <!-- LEFT: Process Flow -->
+      <section class="card" id="flow">
+        <div class="hd">
+          <h2>Master Process Flow (Swim‑lane Ready)</h2>
+          <span class="tag">Aduri Sreenivas · MicroCenter Gulf</span>
+        </div>
+        <div class="bd">
+          <div class="badges" style="margin-bottom:10px">
+            <div class="badge">Channels/Entry</div>
+            <div class="badge">Security & Governance</div>
+            <div class="badge">Orchestration (LangGraph)</div>
+            <div class="badge">Agent Steps (LangChain)</div>
+            <div class="badge">ArcGIS & Data Plane</div>
+            <div class="badge">Decision & Delivery</div>
+            <div class="badge">DevOps</div>
+          </div>
+          <ol class="steps">
+            <li><strong>Entry & Intake</strong> — Web, Mobile, WhatsApp, Voice, or ArcGIS Pro AI Assistant receives request (e.g., validate permit, title transfer, AVM, complaint).</li>
+            <li><strong>Trust Gate</strong> — OAuth2/OIDC → ABAC/RBAC → MCP scope & budget/rate‑limit → PII redaction & residency policies.</li>
+            <li><strong>Intent Routing</strong> — <em>LG‑Router</em> selects domain flow (Permits, Registry, AVM, Inspections, Assets, Urban Studies) & agents (Planning, Retrieval, Code, Vision, Audit).</li>
+            <li><strong>Grounding</strong> — <em>Retrieval Agent (RAG + KG via LC)</em> pulls applicable policies (Arabic/English) + datasets with citations.</li>
+            <li><strong>SQL Pre‑Filter</strong> — <em>Code Agent via LC → Query Layers</em> to narrow candidate parcels/assets/facilities.</li>
+            <li><strong>KG Traversal</strong> — <em>Code Agent via LC → openCypher</em> to evaluate ownership/liens/inspection relationships (multi‑hop).</li>
+            <li><strong>Analytic & GeoAI</strong> — <em>Planning / Code / Vision Agents</em> run ArcPy/GP, ML (AVM, risk), imagery/LiDAR detection & change tracking.</li>
+            <li><strong>Deterministic Rules</strong> — <em>LG Policy Logic</em> applies rule JSON (setbacks, FAR, coverage, title constraints, listing rules).</li>
+            <li><strong>Audit & Evidence</strong> — <em>Audit Agent</em> compiles outcomes, KG proofs, model outputs, and RAG citations.</li>
+            <li><strong>Plan & Diff</strong> — <em>LG Plan</em> generates change‑set (edits, flags, annotations) and preview diffs.</li>
+            <li><strong>Risk & Approval</strong> — <em>LG Approval Gate</em> with human‑in‑the‑loop for high‑risk updates.</li>
+            <li><strong>Guarded Apply</strong> — <em>Tool‑Calling / SDI Agent via LC</em> performs scoped, audited writes to Feature Services/registries.</li>
+            <li><strong>Explain & Deliver</strong> — Return KPIs + citations + rule path + KG proof → dashboards, reports/letters, notifications, work orders.</li>
+            <li><strong>Observability</strong> — Traces per agent/tool; KPIs (compliance %, jobs/min, edits/day); immutable logs.</li>
+            <li><strong>DevOps Loop</strong> — TestGen in CI/CD; data contracts; CDC to KG & RAG index refresh; HA/DR drills; cost/model routing.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- RIGHT: TOC + Rules  -->
+      <aside class="card">
+        <div class="hd"><h3>Quick Jump</h3></div>
+        <div class="bd">
+          <nav class="toc">
+            <a href="#flows">Government DAG Examples</a>
+            <a href="#rules">Where Each Piece Applies</a>
+            <a href="#api">FastAPI Endpoints</a>
+            <a href="#arcgis">ArcGIS Capabilities</a>
+            <a href="#data">Data Plane</a>
+            <a href="#legend">Legend</a>
+          </nav>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Where Each Piece Applies -->
+    <section id="rules" class="card" style="margin-top:18px">
+      <div class="hd"><h2>Where Each Piece Applies — Quick Rules</h2></div>
+      <div class="bd cols">
+        <ul>
+          <li><strong>SQL (Query Layers)</strong> → set‑based filters & joins for parcels/facilities/comparables.</li>
+          <li><strong>Knowledge Graph (openCypher)</strong> → multi‑hop relations (ownership, liens, permit→inspection).</li>
+          <li><strong>RAG (Retrieval Agent)</strong> → any output requiring <em>policy citations</em> (Arabic/English).</li>
+        </ul>
+        <ul>
+          <li><strong>Vision/GeoAI</strong> → imagery/LiDAR detection & change tracking.</li>
+          <li><strong>Approval Gate</strong> → any write with <em>public risk</em> (permits, titles, listings).</li>
+          <li><strong>MCP Scopes</strong> → all <em>edits</em> or sensitive access.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Government Orchestration Examples -->
+    <section id="flows" class="card" style="margin-top:18px">
+      <div class="hd"><h2>Government Orchestration Examples (DAGs)</h2></div>
+      <div class="bd cols">
+        <div>
+          <h3>A) Permit Validation (Municipal)</h3>
+          <ol>
+            <li><em>LG‑Router</em> → intent=validate_permit</li>
+            <li><em>LC‑SQL</em> → candidate parcels/applicants</li>
+            <li><em>LC‑Policy RAG</em> → zoning clauses → rule JSON + citations</li>
+            <li><em>LG‑Rule Check</em> → setbacks/FAR/coverage</li>
+            <li><em>LC‑KG</em> → missing inspections/conflicts</li>
+            <li><em>LG‑Plan & Diff</em> → flags, annotations, evidence</li>
+            <li><em>LG‑Approval Gate</em> → human review</li>
+            <li><em>LC‑Apply</em> → guarded writes (MCP)</li>
+            <li><em>LC‑Explain</em> → KPIs, citations, rule path, KG proof</li>
+          </ol>
+        </div>
+        <div>
+          <h3>B) Land Registry — Title Transfer</h3>
+          <ol>
+            <li>Intake → <em>LC‑RAG</em> (title rules/encumbrances)</li>
+            <li><em>LC‑KG</em> ownership & lien traversal</li>
+            <li><em>LC‑SQL</em> parcel/lot checks</li>
+            <li><em>LG‑Policy Logic</em> outcomes + risk score</li>
+            <li><em>LG‑Approval Gate</em> notary/registrar</li>
+            <li><em>LC‑Apply</em> update titles; immutable audit log</li>
+            <li><em>LC‑Explain</em> certificate packet + citations</li>
+          </ol>
+        </div>
+        <div>
+          <h3>C) Real Estate — AVM & Listing Compliance</h3>
+          <ol>
+            <li><em>LC‑SQL</em> comparables & features</li>
+            <li><em>LC‑Code</em> AVM inference</li>
+            <li><em>LC‑RAG</em> disclosure/advertising rules</li>
+            <li><em>LG‑Policy Logic</em> violations?</li>
+            <li><em>LG‑Approval Gate</em> if needed</li>
+            <li><em>LC‑Publish</em> price band + compliance report</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- FastAPI Endpoints -->
+    <section id="api" class="card" style="margin-top:18px">
+      <div class="hd"><h2>Integration (FastAPI) — Endpoints → Flows</h2></div>
+      <div class="bd code">
+POST /validate_permit        → runs Permit DAG and returns evidence
+POST /validate_title         → Registry DAG
+POST /title_search           → parcel/owner/title lookup (scoped)
+POST /avm_estimate           → automated valuation + comparables
+POST /listing_check          → listing compliance
+POST /schedule_maintenance   → prioritize assets, create work order
+POST /prioritize_inspections → rank facilities by risk
+POST /incident_route         → responders & routes
+POST /impact_assessment      → demand estimates
+POST /plan_only              → dry‑run
+POST /scenario_diff          → baseline vs proposal
+POST /submit_edits           → approval + MCP scope
+POST /policy_explain         → citations & path
+POST /assess_accessibility   → access KPIs (15‑min, equity)
+POST /compute_walkshed       → isochrones (5/10/15 min)
+POST /equity_metrics         → demographics joins & indices
+POST /data_quality/run       → Reviewer
+      </div>
+    </section>
+
+    <!-- ArcGIS Capabilities -->
+    <section id="arcgis" class="card" style="margin-top:18px">
+      <div class="hd"><h2>ArcGIS Capabilities — Data & Tools</h2></div>
+      <div class="bd cols">
+        <ul>
+          <li>GP Tools / GPServer</li>
+          <li>Knowledge Graph (openCypher)</li>
+          <li>Query Layers (SQL)</li>
+          <li>Network Analyst (Service Area/Isochrones)</li>
+          <li>Spatial Statistics (Hot Spot, Moran’s I)</li>
+          <li>Space Time Pattern Mining</li>
+          <li>SDI: WMS/WFS/WCS</li>
+        </ul>
+        <ul>
+          <li>Data Reviewer (DQ gates)</li>
+          <li>Velocity / Kafka (streams & events)</li>
+          <li>Portal/Server HA + tile caches</li>
+          <li>Time‑aware versions & lineage</li>
+          <li>Enterprise GDB (authoritative store)</li>
+          <li>Feature Services (guarded writes)</li>
+          <li>Catalog + lineage + data contracts</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Data Plane -->
+    <section id="data" class="card" style="margin-top:18px">
+      <div class="hd"><h2>Data Plane — Storage & Models</h2></div>
+      <div class="bd cols">
+        <ul>
+          <li><strong>Authoritative Stores</strong> — Enterprise GDB; Registry: titles, encumbrances, transactions.</li>
+          <li><strong>Feature Services</strong> — Guarded writes; contracts.</li>
+          <li><strong>Spatial ML</strong> — Feature Store by <em>entity_id</em>; model registry; batch/online inference.</li>
+        </ul>
+        <ul>
+          <li><strong>Imagery/LiDAR</strong> — Detection & change tracking; lifecycle buckets.</li>
+          <li><strong>Ops & Scale</strong> — Velocity/Kafka, HA caches, version tags.</li>
+          <li><strong>Query Layers & KG</strong> — SQL for sets; openCypher for relations.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Legend -->
+    <section id="legend" class="card" style="margin-top:18px">
+      <div class="hd"><h2>Legend & Notes</h2></div>
+      <div class="bd">
+        <div class="kpi" style="margin-bottom:10px">
+          <div class="pill">LG = LangGraph node (control, approvals, branching)</div>
+          <div class="pill">LC = LangChain step (RAG, tools, SQL, openCypher, ArcPy)</div>
+          <div class="pill">MCP = Model Context Protocol (scoped tools & budgets)</div>
+        </div>
+        <div class="callout">Rule of thumb: use <strong>LangGraph</strong> for DAG & control‑flow; use <strong>LangChain</strong> inside nodes for RAG/tool wrappers. Always pass edits through <strong>MCP scopes</strong> and <strong>Approval Gates</strong>.</div>
+      </div>
+    </section>
+
+    <footer>
+      © 2025 Aduri Sreenivas · MicroCenter Gulf — Master Process Flow · Geospatial Agentic Architecture for Government
+    </footer>
+  </main>
+</body>
+</html>
