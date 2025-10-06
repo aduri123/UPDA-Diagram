@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Geospatial Agentic AI — PoC Development Flow</title>
+  <meta name="description" content="Single-file, GitHub-ready page describing a 7-step Proof of Concept (PoC) development framework for a Geospatial Agentic AI system. Includes sections for KPIs, timeline, risks, and deliverables." />
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Inter","ui-sans-serif","system-ui","-apple-system","Segoe UI","Roboto","Ubuntu","Cantarell","Noto Sans","Helvetica Neue","Arial","sans-serif"],
+          },
+          boxShadow: {
+            soft: '0 8px 30px rgba(2,6,23,0.08)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Subtle gradient background */
+    body { background: radial-gradient(1200px 600px at 10% 10%, rgba(59,130,246,0.08), transparent),
+                    radial-gradient(900px 500px at 90% 30%, rgba(236,72,153,0.08), transparent),
+                    radial-gradient(800px 500px at 50% 90%, rgba(99,102,241,0.08), transparent); }
+    .badge { @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium; }
+    .card  { @apply rounded-2xl bg-white/80 backdrop-blur shadow-soft border border-slate-200; }
+    .sect  { @apply card p-6 md:p-8; }
+    .h1    { @apply text-2xl md:text-3xl font-semibold tracking-tight; }
+    .h2    { @apply text-xl md:text-2xl font-semibold; }
+    .h3    { @apply text-lg md:text-xl font-semibold; }
+    .muted { @apply text-slate-600; }
+    .pill  { @apply text-[10px] uppercase tracking-wide font-semibold rounded-full px-2.5 py-1; }
+    .kbd   { @apply rounded border bg-slate-50 px-1.5 py-0.5 text-[11px] font-mono text-slate-700 border-slate-200; }
+    .grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  </style>
+</head>
+<body class="font-sans text-slate-900 antialiased">
+  <div class="mx-auto max-w-7xl px-4 md:px-6 lg:px-8 py-8 md:py-12">
+
+    <!-- Header -->
+    <header class="mb-8 md:mb-12">
+      <div class="flex items-center justify-between gap-4">
+        <div>
+          <h1 class="h1">🌍 Geospatial Agentic AI — <span class="text-slate-700">PoC Development Flow</span></h1>
+          <p class="muted mt-1">Aduri Sreenivas · MicroCenter Gulf</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="window.print()" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm hover:bg-slate-50">
+            <span>🖨️</span><span>Print / PDF</span>
+          </button>
+          <button id="exportPngBtn" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm hover:bg-slate-50">
+            <span>🖼️</span><span>Export PNG</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Pillars Row -->
+    <section class="grid-auto mb-8">
+      <div class="card p-5">
+        <div class="pill bg-emerald-50 text-emerald-700 border border-emerald-200 inline-block mb-2">🟩 Data & Insights</div>
+        <p class="text-sm">ArcGIS, SDI, RAG, Knowledge Graph</p>
+      </div>
+      <div class="card p-5">
+        <div class="pill bg-fuchsia-50 text-fuchsia-700 border border-fuchsia-200 inline-block mb-2">🩷 Agents & Intelligence</div>
+        <p class="text-sm">GenAI, GeoAI, Reasoning Agents</p>
+      </div>
+      <div class="card p-5">
+        <div class="pill bg-violet-50 text-violet-700 border border-violet-200 inline-block mb-2">💜 Orchestration & Governance</div>
+        <p class="text-sm">LangGraph, LangChain, MCP, ABAC</p>
+      </div>
+      <div class="card p-5">
+        <div class="pill bg-slate-100 text-slate-700 border border-slate-200 inline-block mb-2">🩶 Outcomes & Learning</div>
+        <p class="text-sm">Dashboards, Reports, Feedback Loops</p>
+      </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="sect mb-8">
+      <div class="flex items-center justify-between gap-4">
+        <h2 class="h2">🩷 Overview</h2>
+        <span class="kbd">v1.0</span>
+      </div>
+      <p class="mt-3 text-slate-700 leading-relaxed">
+        The Geospatial Agentic Architecture for Government extends Agentic AI into geospatial governance. It connects
+        ArcGIS, Retrieval-Augmented Generation (RAG), Knowledge Graphs, and MCP orchestration to automate reasoning,
+        validation, and policy compliance with full auditability.
+      </p>
+    </section>
+
+    <!-- 7-Step Flow -->
+    <section class="sect mb-8" id="flow">
+      <h2 class="h2 mb-4">🧭 Agentic AI System Development Flow</h2>
+      <ol class="space-y-4">
+        <!-- 1 -->
+        <li class="card p-5">
+          <div class="flex items-start justify-between">
+            <div>
+              <div class="badge bg-emerald-50 text-emerald-700 border border-emerald-200">🟩 1️⃣ Define Use Case</div>
+              <h3 class="h3 mt-2">Start small — e.g., automate zoning compliance or title validation.</h3>
+              <p class="muted mt-1">Output: A measurable objective.</p>
+            </div>
+          </div>
+          <details class="mt-3">
+            <summary class="cursor-pointer text-sm text-slate-700">Inputs, KPIs & acceptance</summary>
+            <div class="mt-2 text-sm text-slate-700 space-y-1">
+              <p><span class="font-semibold">Inputs:</span> 10–20 parcel IDs/lat-lon, zoning bylaws (PDF/HTML), ArcGIS Feature Services, 5–10 labeled planner decisions.</p>
+              <p><span class="font-semibold">KPIs:</span> ≥85% agreement vs. ground truth; ≤30s E2E latency.</p>
+            </div>
+          </details>
+        </li>
+        <!-- 2 -->
+        <li class="card p-5">
+          <div class="badge bg-fuchsia-50 text-fuchsia-700 border border-fuchsia-200">🩷 2️⃣ Build a Reasoning Agent</div>
+          <h3 class="h3 mt-2">Use LangChain RAG + Knowledge Graph to interpret zoning & spatial data.</h3>
+          <p class="muted mt-1">Output: A reasoning prototype.</p>
+          <details class="mt-3">
+            <summary class="cursor-pointer text-sm text-slate-700">Artifact example</summary>
+            <pre class="mt-2 bg-slate-50 p-3 rounded-xl text-xs overflow-auto border border-slate-200">{
+  "parcel_id": "P-123",
+  "zone": "R3",
+  "applicable_rules": ["max_height=12m", "setback_front=3m"],
+  "reasoning": "Lot width 14m meets R3; height proposed 14m > 12m",
+  "preliminary_decision": "non_compliant",
+  "citations": ["bylaw_4.2.1", "table_R3_2"]
+}</pre>
+          </details>
+        </li>
+        <!-- 3 -->
+        <li class="card p-5">
+          <div class="badge bg-fuchsia-50 text-fuchsia-700 border border-fuchsia-200">🩷 3️⃣ Add Tool‑Calling & Integration Agents</div>
+          <h3 class="h3 mt-2">Connect ArcGIS APIs, SQL databases, and Knowledge Graphs.</h3>
+          <p class="muted mt-1">Output: Agents that act on real data.</p>
+          <ul class="mt-3 text-sm text-slate-700 list-disc pl-5">
+            <li>Tools: <span class="kbd">get_parcel_facts</span>, <span class="kbd">buffer/setback</span>, <span class="kbd">query_zone_rules</span>, <span class="kbd">fetch_title_facts</span></li>
+            <li>Acceptance: tool failures &lt; 5%; all answers carry data lineage & citations.</li>
+          </ul>
+        </li>
+        <!-- 4 -->
+        <li class="card p-5">
+          <div class="badge bg-violet-50 text-violet-700 border border-violet-200">💜 4️⃣ Orchestrate with LangGraph</div>
+          <h3 class="h3 mt-2">Link agents in a DAG with routing, branching, and human approvals.</h3>
+          <p class="muted mt-1">Output: A transparent multi‑agent system.</p>
+          <p class="text-sm text-slate-700 mt-3">Acceptance: 100% runs produce a visual trace & replayable logs.</p>
+        </li>
+        <!-- 5 -->
+        <li class="card p-5">
+          <div class="badge bg-violet-50 text-violet-700 border border-violet-200">💜 5️⃣ Govern with MCP + ABAC</div>
+          <h3 class="h3 mt-2">Apply scoped access, bilingual policies, and audit trails.</h3>
+          <p class="muted mt-1">Output: A trusted, governed environment.</p>
+          <ul class="mt-3 text-sm text-slate-700 list-disc pl-5">
+            <li>MCP scopes for tool access; ABAC attributes: department, municipality, sensitivity.</li>
+            <li>PII redaction and bilingual (Arabic/English) prompt paths.</li>
+          </ul>
+        </li>
+        <!-- 6 -->
+        <li class="card p-5">
+          <div class="badge bg-slate-100 text-slate-700 border border-slate-200">🩶 6️⃣ Scale Across Domains</div>
+          <h3 class="h3 mt-2">Extend to Urban Studies, Real Estate, Land Registry, Permits, Citizen Services.</h3>
+          <p class="muted mt-1">Output: Cross‑department ecosystem via adapters & rulepacks.</p>
+        </li>
+        <!-- 7 -->
+        <li class="card p-5">
+          <div class="badge bg-slate-100 text-slate-700 border border-slate-200">🩶 7️⃣ Learn & Improve</div>
+          <h3 class="h3 mt-2">Integrate TestGen & inspection feedback for continual model refinement.</h3>
+          <p class="muted mt-1">Output: Continuous learning and transparency.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- KPIs -->
+    <section class="sect mb-8">
+      <h2 class="h2 mb-4">📏 Success Metrics (commit in proposal)</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        <ul class="card p-5 list-disc pl-6 text-sm text-slate-700">
+          <li><strong>Decision agreement:</strong> ≥85% vs. planners on PoC set</li>
+          <li><strong>Latency (E2E):</strong> ≤30s median; ≤60s p95</li>
+          <li><strong>Explainability:</strong> 100% answers include rule citations + map snapshot</li>
+        </ul>
+        <ul class="card p-5 list-disc pl-6 text-sm text-slate-700">
+          <li><strong>Governance:</strong> 100% tool calls scoped; 100% runs logged</li>
+          <li><strong>Bilingual:</strong> Arabic queries produce equivalent decisions on 10 prompts</li>
+          <li><strong>Reliability:</strong> Tool failure rate &lt; 5%</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="sect mb-8">
+      <h2 class="h2 mb-4">🗓️ 3‑Week PoC Plan</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="card p-5">
+          <div class="pill bg-emerald-50 text-emerald-700 border border-emerald-200 mb-2">Week 1</div>
+          <ul class="text-sm text-slate-700 list-disc pl-5">
+            <li>Data handshake: ArcGIS endpoints, zoning corpora</li>
+            <li>RAG index + KG stub; Reasoning agent v0</li>
+            <li><span class="font-semibold">Milestone:</span> Rule retrieval ≥80%</li>
+          </ul>
+        </div>
+        <div class="card p-5">
+          <div class="pill bg-fuchsia-50 text-fuchsia-700 border border-fuchsia-200 mb-2">Week 2</div>
+          <ul class="text-sm text-slate-700 list-disc pl-5">
+            <li>Tool‑calling with ArcGIS + SQL</li>
+            <li>DAG in LangGraph; basic audit logs</li>
+            <li><span class="font-semibold">Milestone:</span> E2E ≤45s; 10‑case demo</li>
+          </ul>
+        </div>
+        <div class="card p-5">
+          <div class="pill bg-violet-50 text-violet-700 border border-violet-200 mb-2">Week 3</div>
+          <ul class="text-sm text-slate-700 list-disc pl-5">
+            <li>MCP scopes + ABAC policies</li>
+            <li>Arabic/English prompts; TestGen + error taxonomy</li>
+            <li><span class="font-semibold">Final:</span> 15 live cases; replayable trace</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deliverables -->
+    <section class="sect mb-8">
+      <h2 class="h2 mb-4">📦 Demo Artifacts</h2>
+      <div class="grid-auto">
+        <div class="card p-5">
+          <h3 class="h3">Single‑File Web UI</h3>
+          <p class="muted mt-1">Parcel input → decision, citations, map preview, downloadable JSON</p>
+        </div>
+        <div class="card p-5">
+          <h3 class="h3">Trace Viewer</h3>
+          <p class="muted mt-1">PNG/SVG of DAG per run + JSON trace</p>
+        </div>
+        <div class="card p-5">
+          <h3 class="h3">Audit Log CSV</h3>
+          <p class="muted mt-1">who/what/tools/latency</p>
+        </div>
+        <div class="card p-5">
+          <h3 class="h3">5–7 Slide Deck</h3>
+          <p class="muted mt-1">Problem → Flow → Demo → KPIs → Risks → Next</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Risks & Mitigations -->
+    <section class="sect mb-8">
+      <h2 class="h2 mb-4">⚠️ Risks & Mitigations</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm border-separate border-spacing-y-2">
+          <thead>
+            <tr>
+              <th class="text-left px-3 py-2">Risk</th>
+              <th class="text-left px-3 py-2">Impact</th>
+              <th class="text-left px-3 py-2">Mitigation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="card">
+              <td class="px-3 py-3">Rule ambiguity / outdated bylaws</td>
+              <td class="px-3 py-3">Incorrect verdicts</td>
+              <td class="px-3 py-3">Curate 10‑rule gold set; date‑stamp sources</td>
+            </tr>
+            <tr class="card">
+              <td class="px-3 py-3">Data access delays</td>
+              <td class="px-3 py-3">Blocked integrations</td>
+              <td class="px-3 py-3">Start with CSV/GeoJSON mirrors; swap to live FS later</td>
+            </tr>
+            <tr class="card">
+              <td class="px-3 py-3">Latency spikes</td>
+              <td class="px-3 py-3">Poor UX</td>
+              <td class="px-3 py-3">Cache parcel facts; parallelize retrieval + map snapshot</td>
+            </tr>
+            <tr class="card">
+              <td class="px-3 py-3">Bilingual prompt drift</td>
+              <td class="px-3 py-3">Inconsistent decisions</td>
+              <td class="px-3 py-3">Parallel prompt templates; 10 Arabic spot‑checks</td>
+            </tr>
+            <tr class="card">
+              <td class="px-3 py-3">Over‑fitting to PoC cases</td>
+              <td class="px-3 py-3">Poor generalization</td>
+              <td class="px-3 py-3">Hold‑out 20–30% for blind test in Week 3</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-10 text-center text-xs text-slate-500">
+      <p>© 2025 Aduri Sreenivas · MicroCenter Gulf · Geospatial Agentic AI — PoC Development Flow</p>
+      <p class="mt-1">Define → Build → Integrate → Orchestrate → Govern → Scale → Learn</p>
+    </footer>
+  </div>
+
+  <!-- html2canvas for PNG export -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script>
+    const btn = document.getElementById('exportPngBtn');
+    btn?.addEventListener('click', async () => {
+      const node = document.body;
+      const canvas = await html2canvas(node, {useCORS: true, backgroundColor: '#ffffff'});
+      const link = document.createElement('a');
+      link.download = 'geospatial_agentic_ai_poc_development_flow.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  </script>
+</body>
+</html>
