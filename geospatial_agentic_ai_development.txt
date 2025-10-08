@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Geospatial Agentic AI System Development Flow</title>
+  <meta name="description" content="Define → Build → Integrate → Orchestrate → Deliver → Operate." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme:{extend:{
+        fontFamily:{sans:["Inter","ui-sans-serif","system-ui","-apple-system","Segoe UI","Roboto","Ubuntu","Noto Sans","Helvetica Neue","Arial","sans-serif"]},
+        boxShadow:{soft:"0 6px 22px rgba(2,6,23,.06)"},
+        backgroundImage:{hero:"linear-gradient(135deg,#22c55e,#3b82f6,#8b5cf6)"},
+      }}
+    }
+  </script>
+</head>
+<body class="bg-gray-50 text-slate-800 font-sans">
+  <!-- HERO -->
+  <header class="bg-hero text-white py-16 shadow-soft">
+    <div class="max-w-6xl mx-auto px-6">
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight">Geospatial Agentic AI System Development Flow</h1>
+      <p class="mt-2 text-lg opacity-90">Define → Build → Integrate → Orchestrate → Deliver → Operate.</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="./Geospatial%20Agentic%20Architecture%20for%20Government.html" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition">← View Application Flow</a>
+        <a href="./index.html" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition">Home</a>
+        <a href="https://github.com/aduri123/UPDA-Diagram" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition">Repository</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="max-w-6xl mx-auto px-6 py-12">
+    <div class="grid md:grid-cols-2 gap-6">
+      <section class="rounded-2xl bg-white p-6 shadow-soft border border-slate-200">
+        <h3 class="text-xl font-semibold">1) Define Use Case & KPI</h3>
+        <ul class="mt-3 list-disc pl-5 text-slate-700 space-y-1">
+          <li>Pick one outcome (e.g., zoning compliance for a parcel).</li>
+          <li>Acceptance criteria & KPI (precision, latency, coverage).</li>
+          <li>Inputs: parcels, titles, zoning, imagery/LiDAR, IoT, policies.</li>
+        </ul>
+      </section>
+
+      <section class="rounded-2xl bg-white p-6 shadow-soft border border-slate-200">
+        <h3 class="text-xl font-semibold">2) Build a Reasoning Agent</h3>
+        <ul class="mt-3 list-disc pl-5 text-slate-700 space-y-1">
+          <li>LLM + RAG (policy docs with citations).</li>
+          <li>Knowledge Graph (openCypher) for rule paths & relationships.</li>
+          <li>Tool-calling for spatial validation & queries.</li>
+        </ul>
+        <pre class="mt-3 bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm overflow-auto">MATCH (p:Parcel)-[:LOCATED_IN]->(z:Zone)
+WHERE p.id = $parcelId AND z.setback_m &lt;= 3
+RETURN p.id AS parcelId, z.name AS zone, z.setback_m AS rule;</pre>
+      </section>
+
+      <section class="rounded-2xl bg-white p-6 shadow-soft border border-slate-200">
+        <h3 class="text-xl font-semibold">3) Connect ArcGIS Tools (Tool Agents)</h3>
+        <ul class="mt-3 list-disc pl-5 text-slate-700 space-y-1">
+          <li>ArcGIS REST &amp; Python API (Feature/Map/Image services).</li>
+          <li>ArcGIS Pro GPTools via FastAPI endpoints.</li>
+          <li>Feature store by <code>entity_id</code> (parcel_id, asset_id, case_id).</li>
+        </ul>
+      </section>
+
+      <section class="rounded-2xl bg-white p-6 shadow-soft border border-slate-200">
+        <h3 class="text-xl font-semibold">4) Orchestrate with LangGraph / MCP</h3>
+        <ul class="mt-3 list-disc pl-5 text-slate-700 space-y-1">
+          <li>Graph: Retrieval → Reasoning → Validation → Writer.</li>
+          <li>Human-in-the-loop gates (risk-based approvals).</li>
+          <li>ABAC on tools &amp; data; OAuth2/OIDC at gateway.</li>
+        </ul>
+      </section>
+
+      <section class="rounded-2xl bg-white p-6 shadow-soft border border-slate-200">
+        <h3 class="text-xl font-semibold">5) Deliverables & UX</h3>
+        <ul class="mt-3 list-disc pl-5 text-slate-700 space-y-1">
+          <li>Dashboards (ArcGIS Dashboards / Experience).</li>
+          <li>Explain packets: citations, rule paths, KG evidence.</li>
+          <li>Notifications &amp; work orders via webhooks (EAM/CRM).</li>
+        </ul>
+      </section>
+
+      <section class="rounded-2xl bg-white p-6 shadow-soft border border-slate-200">
+        <h3 class="text-xl font-semibold">6) CI/CD, Testing, & Ops</h3>
+        <ul class="mt-3 list-disc pl-5 text-slate-700 space-y-1">
+          <li>IaC (Terraform / ArcGIS Admin API): staging → prod.</li>
+          <li>TestGen with synthetic data &amp; golden answers in CI.</li>
+          <li>Backups/restores with tags; cost &amp; model routing.</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="mt-10 flex flex-wrap gap-4">
+      <a href="./Geospatial%20Agentic%20Architecture%20for%20Government.html" class="px-6 py-3 rounded-xl font-semibold text-white bg-slate-700 hover:bg-slate-800 transition">← View Application Flow</a>
+      <a href="./index.html" class="px-6 py-3 rounded-xl font-semibold text-white bg-emerald-600 hover:bg-emerald-700 transition">Back to Index</a>
+      <a href="https://github.com/aduri123/UPDA-Diagram" class="px-6 py-3 rounded-xl font-semibold text-white bg-sky-600 hover:bg-sky-700 transition">View Repository</a>
+    </div>
+  </main>
+
+  <footer class="text-center py-10 text-sm text-slate-500 border-t border-slate-200">
+    © 2025 Aduri Sreenivas · MicroCenter Gulf · Development Flow
+  </footer>
+</body>
+</html>
