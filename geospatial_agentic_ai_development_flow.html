@@ -3,525 +3,112 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Geospatial Agentic Architecture for Government — Application Flow (with Agentic AI Layer)</title>
-  <meta name="description" content="Complete Application Flow of Geospatial Agentic Architecture using ArcGIS, MCP, RAG, Knowledge Graph, and SDI — with integrated Agentic AI Layer." />
-
-  <!-- Tailwind (CDN) -->
+  <title>Geospatial Agentic AI System Development Flow</title>
+  <meta name="description" content="Practical, repeatable steps to build agentic GIS solutions — from use case to CI/CD." />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: {
-            sans: ["Inter","ui-sans-serif","system-ui","-apple-system","Segoe UI","Roboto","Ubuntu","Cantarell","Noto Sans","Helvetica Neue","Arial","sans-serif"],
-          },
-          boxShadow: {
-            soft: "0 6px 22px rgba(2,6,23,.06)",
-            glow: "0 0 0 3px rgba(59,130,246,.12)",
-          },
-          colors: {
-            brandA: "#10b981", /* emerald */
-            brandB: "#ec4899", /* fuchsia/rose */
-            brandC: "#8b5cf6", /* violet */
-            brandD: "#64748b"  /* slate */
-          }
+          fontFamily:{sans:["Inter","ui-sans-serif","system-ui","-apple-system","Segoe UI","Roboto","Ubuntu","Noto Sans","Helvetica Neue","Arial","sans-serif"]},
+          boxShadow:{soft:"0 6px 22px rgba(2,6,23,.06)"},
+          backgroundImage:{hero:"linear-gradient(135deg,#0ea5e9,#22c55e,#8b5cf6)"},
         }
       }
     }
   </script>
-
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/lucide@latest"></script>
-
-  <style>
-    .glass { background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.98)); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-    .card { border: 1px solid rgba(2,6,23,.08); box-shadow: var(--tw-shadow,0 6px 22px rgba(2,6,23,.06)); border-radius: 1rem; }
-    .pill { border: 1px solid rgba(2,6,23,.10); border-radius: 9999px; }
-    .ribbon { display:inline-flex; align-items:center; gap:.5rem; padding:.35rem .75rem; border-radius:.625rem; background:#f8fafc; border:1px solid rgba(2,6,23,.10); font-weight:500; }
-    .btn-grad { background: linear-gradient(90deg,#10b981,#ec4899,#8b5cf6,#64748b); }
-    a.anchorlink { text-decoration: underline; color: rgb(71 85 105); }
-    a.anchorlink:hover { color: rgb(30 41 59); }
-  </style>
 </head>
-
-<body class="bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-800 font-sans">
-  <!-- Header -->
-  <header class="bg-gradient-to-r from-brandA via-brandB to-brandC text-white">
-    <div class="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-10 py-10 text-center">
-      <div class="flex items-center justify-center gap-3">
-        <div class="shrink-0 rounded-2xl bg-white/15 p-3 ring-1 ring-white/25">
-          <i data-lucide="globe-2" class="w-7 h-7 text-white"></i>
-        </div>
-        <h1 class="text-3xl md:text-4xl font-bold tracking-tight drop-shadow">
-          Geospatial Agentic Architecture for Government — Application Flow
-        </h1>
-      </div>
-      <p class="text-sm md:text-base text-white/90 mt-3 max-w-4xl mx-auto">
-        Covers <b>ArcGIS</b>, <b>MCP</b>, <b>RAG</b>, <b>Knowledge Graph</b>, <b>SDI</b> — applied across
-        Urban Analytics, Land Registry, Real Estate, Permits, Public Works, Inspections, Citizen Services.
-      </p>
-      <div class="mt-5 flex justify-center">
-        <span class="inline-flex items-center gap-2 pill bg-white/90 text-slate-800 shadow-soft px-4 py-1.5 text-xs font-medium">
-          <i data-lucide="user" class="w-3.5 h-3.5"></i>
-          Aduri Sreenivas · MicroCenter Gulf
-        </span>
+<body class="bg-gray-50 text-slate-800 font-sans">
+  <!-- HERO -->
+  <header class="bg-hero text-white py-16 shadow-soft">
+    <div class="max-w-6xl mx-auto px-6">
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight">Geospatial Agentic AI System Development Flow</h1>
+      <p class="mt-3 text-lg opacity-90">Define → Build → Integrate → Orchestrate → Deliver → Operate.</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="./Geospatial-Agentic-Architectureindex.html" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition">← View Application Flow</a>
+        <a href="./index.html" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition">Home</a>
+        <a href="https://github.com/aduri123/UPDA-Diagram" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition">Repository</a>
       </div>
     </div>
   </header>
 
-  <!-- Mini Visual Legend (Hierarchy Overview) -->
-  <section class="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-10 mt-6 mb-8">
-    <div class="glass card p-4">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <!-- Left: Gradient Title -->
-        <div class="inline-flex items-center gap-2">
-          <span class="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-r from-brandA via-brandB to-brandC">
-            <i data-lucide="layers" class="w-4 h-4 text-white"></i>
-          </span>
-          <h3 class="text-base md:text-lg font-semibold">Architecture Overview</h3>
-        </div>
-
-        <!-- Right: Legend Pills -->
-        <div class="flex flex-wrap gap-2 text-xs">
-          <span class="pill px-3 py-1 inline-flex items-center gap-1 bg-indigo-50 text-indigo-800">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> GenAI
-          </span>
-          <span class="pill px-3 py-1 inline-flex items-center gap-1 bg-emerald-50 text-emerald-800">
-            <i data-lucide="cpu" class="w-3.5 h-3.5"></i> AI Agents
-          </span>
-          <span class="pill px-3 py-1 inline-flex items-center gap-1 bg-rose-50 text-rose-800">
-            <i data-lucide="bot" class="w-3.5 h-3.5"></i> Agentic AI
-          </span>
-          <span class="pill px-3 py-1 inline-flex items-center gap-1 bg-violet-50 text-violet-800">
-            <i data-lucide="workflow" class="w-3.5 h-3.5"></i> Orchestration
-          </span>
-          <span class="pill px-3 py-1 inline-flex items-center gap-1 bg-sky-50 text-sky-800">
-            <i data-lucide="database" class="w-3.5 h-3.5"></i> Data Plane
-          </span>
-          <span class="pill px-3 py-1 inline-flex items-center gap-1 bg-rose-50/60 text-rose-800">
-            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Governance
-          </span>
-        </div>
-      </div>
-
-      <!-- Flow Bar -->
-      <div class="mt-4">
-        <ol class="grid grid-cols-2 md:grid-cols-6 gap-2 text-xs md:text-sm">
-          <li class="glass p-2 rounded-lg border border-indigo-100 flex items-center gap-2">
-            <i data-lucide="sparkles" class="w-4 h-4 text-indigo-700"></i>
-            <span>GenAI (RAG, KG)</span>
-          </li>
-          <li class="glass p-2 rounded-lg border border-emerald-100 flex items-center gap-2">
-            <i data-lucide="cpu" class="w-4 h-4 text-emerald-700"></i>
-            <span>AI Agents</span>
-          </li>
-          <li class="glass p-2 rounded-lg border border-rose-100 flex items-center gap-2">
-            <i data-lucide="bot" class="w-4 h-4 text-rose-700"></i>
-            <span>Agentic AI</span>
-          </li>
-          <li class="glass p-2 rounded-lg border border-violet-100 flex items-center gap-2">
-            <i data-lucide="workflow" class="w-4 h-4 text-violet-700"></i>
-            <span>Orchestration</span>
-          </li>
-          <li class="glass p-2 rounded-lg border border-sky-100 flex items-center gap-2">
-            <i data-lucide="database" class="w-4 h-4 text-sky-700"></i>
-            <span>Data Plane</span>
-          </li>
-          <li class="glass p-2 rounded-lg border border-rose-100 flex items-center gap-2">
-            <i data-lucide="shield-check" class="w-4 h-4 text-rose-700"></i>
-            <span>Security & Governance</span>
-          </li>
-        </ol>
-        <div class="mt-3 h-1 rounded-full bg-gradient-to-r from-brandA via-brandB to-brandC"></div>
-      </div>
-
-      <!-- Quick Anchors -->
-      <nav class="mt-3 text-xs flex flex-wrap gap-3">
-        <a href="#legends" class="anchorlink">Legends</a>
-        <a href="#domains" class="anchorlink">Gov Domains</a>
-        <a href="#channels" class="anchorlink">Channels</a>
-        <a href="#security" class="anchorlink">Security & Governance</a>
-        <a href="#orchestration" class="anchorlink">Orchestration</a>
-        <a href="#agents" class="anchorlink">Agents</a>
-        <a href="#agentic-ai" class="anchorlink">Agentic AI</a>
-        <a href="#mcp-server" class="anchorlink">MCP Server</a>
-        <a href="#integration" class="anchorlink">Integration</a>
-        <a href="#arcgis-capabilities" class="anchorlink">ArcGIS Capabilities</a>
-        <a href="#data-plane" class="anchorlink">Data Plane</a>
-        <a href="#query-kg" class="anchorlink">Query & KG</a>
-        <a href="#delivery" class="anchorlink">Decision & Delivery</a>
-        <a href="#devops" class="anchorlink">DevOps</a>
-      </nav>
-    </div>
-  </section>
-
-  <main class="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-10 py-2">
-    <!-- Legends -->
-    <section id="legends" class="mb-8">
-      <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
-        <span class="pill px-3 py-1 text-xs bg-indigo-50 text-indigo-800">GenAI & GeoAI Agents (Reasoning & Generation)</span>
-        <span class="pill px-3 py-1 text-xs bg-emerald-50 text-emerald-800">System & Data Integration Agents (Validation & Connectivity)</span>
-        <span class="pill px-3 py-1 text-xs bg-rose-50 text-rose-800">Security & Governance</span>
-        <span class="pill px-3 py-1 text-xs bg-violet-50 text-violet-800">Orchestration & MCP</span>
-        <span class="pill px-3 py-1 text-xs bg-sky-50 text-sky-800">ArcGIS & Data Plane</span>
-      </div>
-    </section>
-
-    <!-- Government Domains -->
-    <section id="domains" class="mb-8">
-      <div class="glass card p-5">
-        <div class="ribbon mb-3">
-          <i data-lucide="layers" class="w-5 h-5 text-indigo-700"></i>
-          <h2 class="text-lg font-semibold">Government Domains (examples)</h2>
-        </div>
-        <div class="flex flex-wrap gap-2 text-xs">
-          <span class="pill px-2.5 py-1 bg-indigo-50 text-indigo-800">Urban Analytics & Policy</span>
-          <span class="pill px-2.5 py-1 bg-indigo-50 text-indigo-800">Urban Studies (morphology, accessibility, equity)</span>
-          <span class="pill px-2.5 py-1 bg-emerald-50 text-emerald-800">Land Registry (Cadastre & Titles)</span>
-          <span class="pill px-2.5 py-1 bg-rose-50 text-rose-800">Real Estate (AVM & Listings)</span>
-          <span class="pill px-2.5 py-1 bg-sky-50 text-sky-800">Urban Planning & Permits</span>
-          <span class="pill px-2.5 py-1 bg-emerald-50 text-emerald-800">Public Works & Assets</span>
-          <span class="pill px-2.5 py-1 bg-indigo-50 text-indigo-800">Health & Safety Inspections</span>
-          <span class="pill px-2.5 py-1 bg-violet-50 text-violet-800">Emergency & Incident Response</span>
-          <span class="pill px-2.5 py-1 bg-rose-50 text-rose-800">Finance & Revenues</span>
-          <span class="pill px-2.5 py-1 bg-sky-50 text-sky-800">Citizen Services – Complaints / Tawasul</span>
-          <span class="pill px-2.5 py-1 bg-emerald-50 text-emerald-800">Environment & Waste</span>
-          <span class="pill px-2.5 py-1 bg-indigo-50 text-indigo-800">Transportation & Traffic</span>
-          <span class="pill px-2.5 py-1 bg-violet-50 text-violet-800">Utilities (Water/Power)</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Channels + Security & Governance -->
-    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 items-stretch">
-      <div id="channels" class="glass card p-5 h-full">
-        <div class="ribbon mb-3">
-          <i data-lucide="message-square" class="w-5 h-5 text-slate-700"></i>
-          <h2 class="text-lg font-semibold">Channels (Entry)</h2>
-        </div>
-        <ul class="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
-          <li class="flex items-center gap-2"><i data-lucide="monitor" class="w-4 h-4"></i>Web</li>
-          <li class="flex items-center gap-2"><i data-lucide="smartphone" class="w-4 h-4"></i>Mobile</li>
-          <li class="flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4"></i>WhatsApp</li>
-          <li class="flex items-center gap-2"><i data-lucide="mic" class="w-4 h-4"></i>Voice</li>
-          <li class="flex items-center gap-2 md:col-span-4"><i data-lucide="bot" class="w-4 h-4"></i>ArcGIS Pro AI Assistant with FastAPI Endpoints</li>
+  <main class="max-w-6xl mx-auto px-6 py-12">
+    <!-- STEPS -->
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- 1 -->
+      <section class="rounded-2xl bg-white p-6 shadow-soft border border-slate-200">
+        <h3 class="text-xl font-semibold">1) Define Use Case & KPI</h3>
+        <ul class="mt-3 list-disc pl-5 text-slate-700 space-y-1">
+          <li>Pick one outcome (e.g., zoning compliance for a parcel).</li>
+          <li>Acceptance criteria & KPI (precision, latency, coverage).</li>
+          <li>Inputs: parcels, titles, zoning, imagery/LiDAR, IoT, policies.</li>
         </ul>
-      </div>
+      </section>
 
-      <div id="security" class="glass card p-5 lg:col-span-2 h-full">
-        <div class="ribbon mb-3">
-          <i data-lucide="shield-check" class="w-5 h-5 text-rose-700"></i>
-          <h2 class="text-lg font-semibold">Security & Governance (Trust)</h2>
-        </div>
-        <div class="grid md:grid-cols-3 gap-4 text-sm">
-          <div class="space-y-2">
-            <div class="flex items-center gap-2"><i data-lucide="castle" class="w-4 h-4"></i><span>API Gateway + OAuth2/OIDC (ABAC-first, thin RBAC)</span></div>
-            <div class="flex items-center gap-2"><i data-lucide="key-round" class="w-4 h-4"></i><span>Secrets/KMS, scoped MCP tokens</span></div>
-          </div>
-          <div class="space-y-2">
-            <div class="flex items-center gap-2"><i data-lucide="clipboard-check" class="w-4 h-4"></i><span>Risk-based approvals, human-in-the-loop</span></div>
-            <div class="flex items-center gap-2"><i data-lucide="alarm-clock" class="w-4 h-4"></i><span>Retention, residency, consent, audit</span></div>
-          </div>
-          <div class="space-y-2">
-            <div class="flex items-center gap-2"><i data-lucide="languages" class="w-4 h-4"></i><span>Arabic/English policies & NER</span></div>
-            <div class="flex items-center gap-2"><i data-lucide="cloud-lightning" class="w-4 h-4"></i><span>HA/DR (RTO/RPO), backup drills</span></div>
-            <div class="flex items-center gap-2"><i data-lucide="file-search" class="w-4 h-4"></i><span>Auditability: traces & immutable logs</span></div>
-            <div class="flex items-center gap-2"><i data-lucide="eraser" class="w-4 h-4"></i><span>Redaction & PII scrubbing policies</span></div>
-            <div class="flex items-center gap-2"><i data-lucide="wallet" class="w-4 h-4"></i><span>Budgets, rate limits & ceilings</span></div>
-            <div class="flex items-center gap-2"><i data-lucide="lock" class="w-4 h-4"></i><span>MCP scopes per tool/action</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Orchestration -->
-    <section id="orchestration" class="glass card p-6 mb-8">
-      <div class="ribbon mb-3">
-        <i data-lucide="workflow" class="w-5 h-5 text-violet-700"></i>
-        <h2 class="text-lg font-semibold">Orchestration (LangGraph + LangChain) — Control</h2>
-      </div>
-
-      <p class="text-sm text-slate-700 mb-3">
-        <b>Rule of thumb:</b> Use <b>LangGraph</b> to orchestrate the DAG & control flow (branches, approvals, retries).
-        Inside nodes, use <b>LangChain</b> for RAG steps, tool wrappers, retrievers. LangChain can also orchestrate simple chains; RAG can be built without it—the split keeps things clear.
-      </p>
-
-      <div class="grid md:grid-cols-2 gap-6 text-sm">
-        <div>
-          <h3 class="font-semibold mb-2 ribbon"><i data-lucide="git-branch" class="w-4 h-4 text-violet-700"></i>LangGraph</h3>
-          <ul class="list-disc pl-5 space-y-1">
-            <li>Branch & merge parallel tasks (e.g., zoning check + impact analysis) then reconcile.</li>
-            <li>Human-in-the-loop approval gates for high-risk actions (permits/overrides).</li>
-            <li>Route intents to agents (Planning, Vision, Code, Conversation) via typed nodes.</li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="font-semibold mb-2 ribbon"><i data-lucide="tool" class="w-4 h-4 text-violet-700"></i>LangChain</h3>
-          <ul class="list-disc pl-5 space-y-1">
-            <li>Wrap ArcGIS/SDI/BIM services as tools (WMS/WFS/WCS, Feature Services, IFC parsers).</li>
-            <li>Compose RAG chains (retrieve → ground → generate → verify) for policy answers.</li>
-            <li>Build tool-calling agents that execute ArcPy/GP tasks and SQL/OpenCypher queries.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="mt-4 rounded-xl border border-violet-200 bg-violet-50 p-4">
-        <div class="font-semibold mb-2">Government Orchestration Examples (DAGs)</div>
-        <ol class="list-decimal pl-5 space-y-2">
-          <li><b>Permit Validation DAG (with RAG)</b> — Intent → SQL pre-filter (eligible parcels/applicants) → RAG grounding (retrieve applicable regulations + citations) → Rule Engine checks → KG traverse (missing inspections/conflicts) → Plan (change-set) → Approval gate → Apply edits → Evidence report.</li>
-          <li><b>Land Registry — Title Transfer Validation</b> — Intake (new transfer) → RAG (title rules, encumbrance clauses) → KG ownership & lien traversal → SQL parcel/lot checks (area, zoning) → Risk score → Notary approval gate → Update titles & audit log.</li>
-          <li><b>Real Estate — AVM & Listing Compliance</b> — SQL comparable sales & features → Code Agent ML inference (AVM) → RAG disclosure/advertising rules → Listing check (violations) → Publish price band + compliance report.</li>
-          <li><b>Asset Maintenance Scheduling</b> — Event (sensor alert or complaint) → SQL filter assets by class/condition → KG fetch work history & dependencies → Route to crew (capacity, location) → Generate work order → Notify citizen.</li>
-          <li><b>Health Inspection Prioritization</b> — Intake (restaurant permits) → RAG policy fetch (risk scoring) → SQL candidate facilities by violations → KG join complaints & past penalties → Schedule inspections → Publish dashboard.</li>
-          <li><b>Urban Studies — Accessibility & Equity</b> — Intent → RAG policy goals → Network isochrones (5/10/15 min walk) → Join demographics → KPIs (% within 15 min, access Gini, land-use mix entropy) → Scenario diff → Dashboard & report.</li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- Agents -->
-    <section id="agents" class="grid md:grid-cols-3 gap-6 items-stretch mb-8">
-      <div class="glass card p-5 border-indigo-200 h-full">
-        <div class="ribbon mb-2"><i data-lucide="book-open" class="w-5 h-5 text-indigo-700"></i><h3 class="font-semibold">Reasoning & Generation (GenAI & GeoAI)</h3></div>
-        <ul class="space-y-1 text-sm">
-          <li><b>Conversation Agent</b> — chat/voice UX; explain results.</li>
-          <li><b>Retrieval Agent (RAG + KG)</b> — fetch docs/datasets; ground answers with citations.</li>
-          <li><b>Planning Agent</b> — what-if scenarios; task decomposition & policy steps.</li>
-          <li><b>Code Agent</b> — SQL/OpenCypher/ArcPy; ML pipelines for valuation/demand.</li>
-          <li><b>Vision/GeoAI Agent</b> — imagery/LiDAR detection & change tracking.</li>
+      <!-- 2 -->
+      <section class="rounded-2xl bg-white p-6 shadow-soft border border-slate-200">
+        <h3 class="text-xl font-semibold">2) Build a Reasoning Agent</h3>
+        <ul class="mt-3 list-disc pl-5 text-slate-700 space-y-1">
+          <li>LLM + RAG (policy docs with citations).</li>
+          <li>Knowledge Graph (openCypher) for rule paths & relationships.</li>
+          <li>Tool-calling for spatial validation & queries.</li>
         </ul>
-      </div>
-      <div class="glass card p-5 border-emerald-200 h-full">
-        <div class="ribbon mb-2"><i data-lucide="settings-2" class="w-5 h-5 text-emerald-700"></i><h3 class="font-semibold">Integration & Validation (System/Data)</h3></div>
-        <ul class="space-y-1 text-sm">
-          <li><b>Tool-Calling Agent</b> — invoke ArcGIS/SDI/DB/BIM tools with MCP scopes.</li>
-          <li><b>SDI / Geospatial API Agent</b> — WMS/WFS/WCS, Feature Services, guarded edits.</li>
-          <li><b>Audit Agent</b> — rule engine checks; compliance reports.</li>
-          <li><b>TestGen Agent</b> — synthetic data, data-drift, regression tests.</li>
+        <pre class="mt-3 bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm overflow-auto">MATCH (p:Parcel)-[:LOCATED_IN]->(z:Zone)
+WHERE p.id = $parcelId AND z.setback_m &lt;= 3
+RETURN p.id AS parcelId, z.name AS zone, z.setback_m AS rule;</pre>
+      </section>
+
+      <!-- 3 -->
+      <section class="rounded-2xl bg-white p-6 shadow-soft border border-slate-200">
+        <h3 class="text-xl font-semibold">3) Connect ArcGIS Tools (Tool Agents)</h3>
+        <ul class="mt-3 list-disc pl-5 text-slate-700 space-y-1">
+          <li>ArcGIS REST & Python API (Feature/Map/Image services).</li>
+          <li>ArcGIS Pro GPTools via FastAPI endpoints.</li>
+          <li>Feature store by <code>entity_id</code> (parcel_id, asset_id, case_id).</li>
         </ul>
-      </div>
-      <div class="glass card p-5 border-amber-200 h-full">
-        <div class="ribbon mb-2"><i data-lucide="workflow" class="w-5 h-5 text-amber-700"></i><h3 class="font-semibold">Orchestration Agents</h3></div>
-        <ul class="space-y-1 text-sm">
-          <li><b>Workflow Coordinator Agent</b> — manages end-to-end flows & approvals.</li>
-          <li><b>Router/Guard Agent</b> — intent routing, risk gates, fallback path.</li>
-          <li><b>Policy Logic Agent</b> — deterministic rules blended with LLM calls.</li>
-          <li><b>Safety Controls</b> — Risk scoring → approval gates; guarded edits with rollback.</li>
-          <li><b>Observability</b> — Tracing per agent/tool; KPIs: compliance %, jobs/min, edits/day.</li>
+      </section>
+
+      <!-- 4 -->
+      <section class="rounded-2xl bg-white p-6 shadow-soft border border-slate-200">
+        <h3 class="text-xl font-semibold">4) Orchestrate with LangGraph / MCP</h3>
+        <ul class="mt-3 list-disc pl-5 text-slate-700 space-y-1">
+          <li>Graph: Retrieval → Reasoning → Validation → Writer.</li>
+          <li>Human-in-the-loop gates (risk-based approvals).</li>
+          <li>ABAC on tools & data; OAuth2/OIDC at gateway.</li>
         </ul>
-      </div>
-    </section>
+      </section>
 
-    <!-- Agentic AI — Planning & Autonomy Layer -->
-    <section id="agentic-ai" class="glass card p-6 mb-8 border-t-4 border-fuchsia-300">
-      <div class="ribbon mb-3 bg-gradient-to-r from-brandA via-brandB to-brandC text-white shadow-soft">
-        <i data-lucide="bot" class="w-5 h-5 text-white"></i>
-        <h2 class="text-lg font-semibold">Agentic AI — Planning & Autonomy Layer</h2>
-      </div>
-
-      <p class="text-sm text-slate-700 mb-3 leading-relaxed">
-        The <b>Agentic AI Layer</b> gives the architecture autonomy and reasoning power.
-        Agents can set goals, plan tasks, call tools, and adapt dynamically while staying within
-        <b>ArcGIS + MCP governance guards</b>. Through <b>LangGraph DAGs</b>, each agent learns from outcomes
-        and collaborates across domains to deliver policy-aware, explainable, and auditable decisions.
-      </p>
-
-      <div class="grid md:grid-cols-2 gap-4 text-sm">
-        <ul class="list-disc pl-5 space-y-1">
-          <li><b>Goal-driven orchestration</b> — agents translate objectives into actionable DAG plans.</li>
-          <li><b>Dynamic planning</b> — workflows evolve in real time from RAG feedback or policy changes.</li>
-          <li><b>Tool-calling under governance</b> — ABAC/MCP tokens restrict execution per scope & risk level.</li>
+      <!-- 5 -->
+      <section class="rounded-2xl bg-white p-6 shadow-soft border border-slate-200">
+        <h3 class="text-xl font-semibold">5) Deliverables & UX</h3>
+        <ul class="mt-3 list-disc pl-5 text-slate-700 space-y-1">
+          <li>Dashboards (ArcGIS Dashboards / Experience).</li>
+          <li>Explain packets: citations, rule paths, KG evidence.</li>
+          <li>Notifications & work orders via webhooks (EAM/CRM).</li>
         </ul>
-        <ul class="list-disc pl-5 space-y-1">
-          <li><b>Human-in-loop gates</b> — approval checkpoints for sensitive or high-impact actions.</li>
-          <li><b>Learning feedback</b> — integrates TestGen results and model metrics for continuous improvement.</li>
-          <li><b>Optimization engine</b> — balances latency, accuracy, and policy compliance KPIs.</li>
+      </section>
+
+      <!-- 6 -->
+      <section class="rounded-2xl bg-white p-6 shadow-soft border border-slate-200">
+        <h3 class="text-xl font-semibold">6) CI/CD, Testing, & Ops</h3>
+        <ul class="mt-3 list-disc pl-5 text-slate-700 space-y-1">
+          <li>IaC (Terraform / ArcGIS Admin API): staging → prod.</li>
+          <li>TestGen with synthetic data & golden answers in CI.</li>
+          <li>Backups/restores with tags; cost & model routing.</li>
         </ul>
-      </div>
-
-      <div class="mt-4 rounded-xl bg-gradient-to-r from-brandA/10 via-brandB/10 to-brandC/10 p-4 text-xs text-slate-600">
-        <i data-lucide="sparkles" class="w-4 h-4 inline mr-1 text-fuchsia-600"></i>
-        <b>Outcome:</b> autonomous, explainable, and policy-aligned government workflows across all ArcGIS-connected systems.
-      </div>
-    </section>
-
-    <!-- MCP Server -->
-    <section id="mcp-server" class="glass card p-6 mb-8">
-      <div class="ribbon mb-3">
-        <i data-lucide="server-cog" class="w-5 h-5 text-violet-700"></i>
-        <h2 class="text-lg font-semibold">MCP Server (Guard)</h2>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
-        <div class="flex items-start gap-2"><i data-lucide="plug-zap" class="w-4 h-4 mt-0.5"></i><div><b>Scoped tools:</b> ArcGIS, SDI, DB, CDE</div></div>
-        <div class="flex items-start gap-2"><i data-lucide="webhook" class="w-4 h-4 mt-0.5"></i><div><b>Budgets/quotas:</b> rate limits & ceilings</div></div>
-        <div class="flex items-start gap-2"><i data-lucide="eraser" class="w-4 h-4 mt-0.5"></i><div><b>Redaction & PII:</b> payload scrubbing policies</div></div>
-        <div class="flex items-start gap-2"><i data-lucide="file-search" class="w-4 h-4 mt-0.5"></i><div><b>Auditability:</b> traces & immutable logs</div></div>
-      </div>
-      <p class="text-xs text-slate-700 mt-3 italic">Routing rule → <b>set-based → SQL</b>; <b>relationship/multi-hop → KG</b></p>
-    </section>
-
-    <!-- Integration (FastAPI) + ArcGIS Capabilities -->
-    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 items-stretch">
-      <div id="integration" class="glass card p-5 h-full">
-        <div class="ribbon mb-2"><i data-lucide="plug-zap" class="w-5 h-5 text-brandA"></i><h2 class="text-lg font-semibold">Integration (FastAPI)</h2></div>
-        <ul class="space-y-1 text-sm">
-          <li>POST /validate_permit → rule checks + evidence log</li>
-          <li>POST /validate_title → encumbrances, liens, ownership graph checks</li>
-          <li>POST /title_search → parcel/owner/title lookup (scoped)</li>
-          <li>POST /avm_estimate → automated valuation model + comparables</li>
-          <li>POST /listing_check → listing compliance (disclosures, policy)</li>
-          <li>POST /schedule_maintenance → prioritize assets, create work order</li>
-          <li>POST /prioritize_inspections → rank facilities by risk</li>
-          <li>POST /incident_route → recommend responders & routes</li>
-          <li>POST /impact_assessment → demand estimates (traffic/utilities/capacity)</li>
-          <hr class="my-2 border-slate-200" />
-          <li>POST /plan_only (dry-run)</li>
-          <li>POST /scenario_diff (baseline vs proposal)</li>
-          <li>POST /submit_edits (approval + MCP scope)</li>
-          <li>POST /policy_explain (citations & path)</li>
-          <li>POST /assess_accessibility → access KPIs (15-min coverage, equity)</li>
-          <li>POST /compute_walkshed → network isochrones (5/10/15 min)</li>
-          <li>POST /equity_metrics → demographics joins & indices</li>
-          <li>POST /data_quality/run (Reviewer)</li>
-        </ul>
-      </div>
-
-      <div id="arcgis-capabilities" class="glass card p-5 lg:col-span-2 h-full">
-        <div class="ribbon mb-2"><i data-lucide="globe" class="w-5 h-5 text-sky-700"></i><h2 class="text-lg font-semibold">ArcGIS Capabilities</h2></div>
-        <div class="grid md:grid-cols-2 gap-4 text-sm">
-          <div>
-            <h4 class="font-semibold mb-1 ribbon"><i data-lucide="database" class="w-4 h-4 text-sky-700"></i>Data & Tools</h4>
-            <ul class="space-y-1">
-              <li>GP Tools / GPServer</li>
-              <li>Knowledge Graph (openCypher)</li>
-              <li>Query Layers (SQL)</li>
-              <li>Network Analyst (Service Area/Isochrones)</li>
-              <li>Spatial Statistics (Hot Spot, Moran’s I)</li>
-              <li>Space Time Pattern Mining</li>
-              <li>SDI: WMS/WFS/WCS</li>
-              <li>Data Reviewer (DQ gates)</li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="font-semibold mb-1 ribbon"><i data-lucide="server" class="w-4 h-4 text-sky-700"></i>Ops & Scale</h4>
-            <ul class="space-y-1">
-              <li>Velocity / Kafka (streams & events)</li>
-              <li>Portal/Server HA + tile caches</li>
-              <li>Time-aware versions & lineage</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Data Plane -->
-    <section id="data-plane" class="glass card p-5 mb-8">
-      <div class="ribbon mb-2"><i data-lucide="database" class="w-5 h-5 text-sky-700"></i><h2 class="text-lg font-semibold">Data Plane — Storage & Models</h2></div>
-      <div class="grid md:grid-cols-3 gap-6 text-sm">
-        <div>
-          <h4 class="font-semibold mb-1">Authoritative Stores</h4>
-          <ul class="space-y-1">
-            <li>Enterprise GDB; Land Registry: titles, encumbrances, transactions</li>
-            <li>Feature Services — Guarded writes; contracts</li>
-            <li>Catalog + lineage + data contracts</li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-semibold mb-1">Spatial ML</h4>
-          <ul class="space-y-1">
-            <li>Feature Store (by <em>entity_id</em>: parcel_id, asset_id, facility_id, case_id)</li>
-            <li>Model registry & experiments; batch & online inference</li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-semibold mb-1">Imagery / LiDAR</h4>
-          <ul class="space-y-1">
-            <li>Detection & change tracking; retention buckets & lifecycle</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Query Layers & Knowledge Graph -->
-    <section id="query-kg" class="glass card p-5 mb-8">
-      <div class="ribbon mb-3"><i data-lucide="file-search" class="w-5 h-5 text-slate-700"></i><h2 class="text-lg font-semibold">Query Layers & Knowledge Graph</h2></div>
-      <div class="grid md:grid-cols-2 gap-4 text-sm">
-        <div class="bg-sky-50 border border-sky-200 rounded-xl p-3">
-          <div class="text-xs uppercase tracking-wider mb-1">SQL (Query Layers)</div>
-          <pre class="text-xs overflow-auto"><code>SELECT parcel_id, area_m2, zoning, title_status
-FROM cadastral_parcels
-WHERE municipality = 'City/MunicipalArea'
-  AND title_status = 'Active'
-  AND area_m2 >= 500;</code></pre>
-        </div>
-        <div class="bg-sky-50 border border-sky-200 rounded-xl p-3">
-          <div class="text-xs uppercase tracking-wider mb-1">openCypher (Knowledge Graph)</div>
-          <pre class="text-xs overflow-auto"><code>MATCH (o:Owner)-[r:OWNS]->(p:Parcel)
-WHERE r.share >= 0.5
-  AND NOT (p)-[:HAS_LIENS]->(:Lien {status:'Active'})
-RETURN p.parcelId AS parcelId, o.ownerId AS ownerId, r.share AS share;</code></pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- Decision & Delivery Layer -->
-    <section id="delivery" class="glass card p-5 mb-8">
-      <div class="ribbon mb-2"><i data-lucide="line-chart" class="w-5 h-5 text-slate-700"></i><h2 class="text-lg font-semibold">Decision & Delivery Layer</h2></div>
-      <div class="grid md:grid-cols-2 gap-6 text-sm">
-        <div>
-          <h4 class="font-semibold mb-1">Decisions & KPIs</h4>
-          <ul class="space-y-1">
-            <li>Scenario dashboards (ArcGIS Dashboards / Experience)</li>
-            <li>Policy Explain packets (citations, rule paths, KG proof)</li>
-            <li>Scenario diff maps & KPI deltas</li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-semibold mb-1">Delivery & Interop</h4>
-          <ul class="space-y-1">
-            <li>Reports (PDFs, permit/title letters)</li>
-            <li>Notifications (Email/SMS/WhatsApp; webhooks)</li>
-            <li>Work orders (EAM/CRM via webhooks)</li>
-            <li>Open data & exports (GeoJSON, CSV/Excel, GeoPackage)</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- DevOps & Release -->
-    <section id="devops" class="glass card p-5 mb-8">
-      <div class="ribbon mb-2"><i data-lucide="git-branch" class="w-5 h-5 text-slate-700"></i><h2 class="text-lg font-semibold">DevOps & Release Management</h2></div>
-      <ul class="space-y-1 text-sm">
-        <li>IaC (Terraform / ArcGIS Admin API); CI/CD for agents, tools & FastAPI (staging → prod)</li>
-        <li>Data pipelines (CDC to KG & RAG index refresh); TestGen in CI (golden datasets & regression)</li>
-        <li>Cost & model routing; Backup/restore drills with version tags</li>
-      </ul>
-    </section>
-
-    <!-- Nav Buttons -->
-    <div class="flex flex-wrap gap-3 justify-center mt-6">
-      <a href="geospatial_agentic_ai_development_flow.html"
-         class="btn-grad text-white px-4 py-2 rounded-xl font-semibold shadow-soft">
-         ⚙️ View Agentic AI Development Flow →
-      </a>
-      <a href="https://github.com/aduri123/UPDA-Diagram"
-         class="px-4 py-2 rounded-xl font-semibold shadow-soft bg-slate-900 text-white">
-         View Repository →
-      </a>
+      </section>
     </div>
 
-    <!-- Footer -->
-    <footer class="mt-10 pb-8 text-xs text-slate-500">
-      <div class="flex flex-wrap gap-2 items-center justify-between">
-        <span>© <span id="year"></span> Aduri Sreenivas · MicroCenter Gulf</span>
-        <span class="inline-flex items-center gap-1"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Application Flow · Updated UI</span>
-      </div>
-    </footer>
+    <!-- CTA -->
+    <div class="mt-10 flex flex-wrap gap-4">
+      <a href="./Geospatial-Agentic-Architectureindex.html" class="px-6 py-3 rounded-xl font-semibold text-white bg-slate-700 hover:bg-slate-800 transition">← View Application Flow</a>
+      <a href="./index.html" class="px-6 py-3 rounded-xl font-semibold text-white bg-emerald-600 hover:bg-emerald-700 transition">Back to Index</a>
+      <a href="https://github.com/aduri123/UPDA-Diagram" class="px-6 py-3 rounded-xl font-semibold text-white bg-sky-600 hover:bg-sky-700 transition">View Repository</a>
+    </div>
   </main>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    lucide.createIcons();
-  </script>
+  <footer class="text-center py-10 text-sm text-slate-500 border-t border-slate-200">
+    © 2025 Aduri Sreenivas · MicroCenter Gulf · Development Flow
+  </footer>
 </body>
 </html>
