@@ -1,1 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agentic GIS Core — Orchestration Flow</title>
+  <meta name="description" content="Interactive SPAR core + detailed agent cards grouped by dominant phase (Sense, Plan, Act, Reflect)." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .card{border-radius:1.25rem;box-shadow:0 12px 32px rgba(2,6,23,.08)}
+    .chip{font-size:.72rem;letter-spacing:.04em}
+    .ring-btn{transition:transform .2s ease,opacity .2s ease;cursor:pointer}
+    .ring-btn:hover{transform:scale(1.03)}
+    html{scroll-behavior:smooth}
+  </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-800">
+  <main class="max-w-7xl mx-auto px-6 md:px-10 py-10">
+    <!-- Header -->
+    <header class="mb-6">
+      <h1 class="text-3xl md:text-5xl font-semibold tracking-tight text-slate-900">Agentic GIS Core — Orchestration Flow</h1>
+      <p class="mt-2 text-slate-600">Interactive SPAR core + detailed agent cards grouped by dominant phase.</p>
+    </header>
+
+    <!-- Hero panel with ring + legend -->
+    <section class="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 card">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <!-- Left: bullets -->
+        <div>
+          <h2 class="text-xl font-semibold text-slate-900">Agentic GIS Core — Orchestration Flow</h2>
+          <ul class="mt-3 space-y-2 text-slate-700">
+            <li><span class="font-semibold">SPAR loop:</span> Agent reasoning cycle</li>
+            <li><span class="font-semibold">Standards:</span> OGC API / ArcGIS REST</li>
+            <li><span class="font-semibold">Security:</span> OAuth2 scopes</li>
+            <li><span class="font-semibold">Governance:</span> Evidence + Audit Trail</li>
+          </ul>
+          <div class="mt-4 inline-flex gap-2 flex-wrap">
+            <span class="chip px-2 py-1 rounded-full bg-cyan-100 text-cyan-700">Sense</span>
+            <span class="chip px-2 py-1 rounded-full bg-amber-100 text-amber-700">Plan</span>
+            <span class="chip px-2 py-1 rounded-full bg-indigo-100 text-indigo-700">Act</span>
+            <span class="chip px-2 py-1 rounded-full bg-rose-100 text-rose-700">Reflect</span>
+          </div>
+        </div>
+
+        <!-- Right: ring diagram -->
+        <div class="relative flex items-center justify-center">
+          <svg viewBox="0 0 260 260" class="w-72 h-72 md:w-[22rem] md:h-[22rem]">
+            <!-- base circle -->
+            <circle cx="130" cy="130" r="100" fill="none" stroke="#e2e8f0" stroke-width="26" />
+            <!-- arcs (clockwise starting top) -->
+            <!-- Sense (cyan) -->
+            <path id="arc-sense" class="ring-btn" fill="none" stroke="#22d3ee" stroke-width="26" stroke-linecap="round"
+                  d="M130,30 a100,100 0 0 1 80,40" />
+            <!-- Plan (amber) -->
+            <path id="arc-plan" class="ring-btn" fill="none" stroke="#f59e0b" stroke-width="26" stroke-linecap="round"
+                  d="M210,70 a100,100 0 0 1 0,120" />
+            <!-- Act (indigo) -->
+            <path id="arc-act" class="ring-btn" fill="none" stroke="#6366f1" stroke-width="26" stroke-linecap="round"
+                  d="M210,190 a100,100 0 0 1 -160,0" />
+            <!-- Reflect (rose) -->
+            <path id="arc-reflect" class="ring-btn" fill="none" stroke="#fb7185" stroke-width="26" stroke-linecap="round"
+                  d="M50,190 a100,100 0 0 1 0,-120" />
+
+            <!-- labels -->
+            <text x="130" y="18" text-anchor="middle" class="text-[10px]" fill="#0f172a">SENSE</text>
+            <text x="238" y="134" text-anchor="middle" class="text-[10px]" fill="#0f172a">PLAN</text>
+            <text x="130" y="248" text-anchor="middle" class="text-[10px]" fill="#0f172a">ACT</text>
+            <text x="22" y="134" text-anchor="middle" class="text-[10px]" fill="#0f172a">REFLECT</text>
+
+            <!-- center core -->
+            <circle cx="130" cy="130" r="64" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" />
+            <text x="130" y="112" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">🤖</text>
+            <text x="130" y="138" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">Agentic GIS Core</text>
+            <text x="130" y="156" text-anchor="middle" font-size="9" fill="#475569">SDI/ArcGIS • LangChain/LangGraph • OGC/REST</text>
+            <text x="130" y="168" text-anchor="middle" font-size="9" fill="#475569">Least-privilege • Evidence • Audit</text>
+          </svg>
+          <p class="mt-3 text-center text-xs text-slate-500">Hover or click a ring arc to jump and highlight related agents.</p>
+        </div>
+      </div>
+
+      <!-- How to read -->
+      <div class="grid md:grid-cols-2 gap-8 mt-10">
+        <div></div>
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+          <h3 class="font-semibold text-slate-900">How to read this</h3>
+          <ul class="mt-2 list-disc pl-5 text-slate-700">
+            <li>Each agent uses all SPAR steps; we group it by its <em>dominant</em> step.</li>
+            <li>Hover or click a ring arc to jump and highlight related agents.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SENSE -->
+    <section id="sense" class="mt-12">
+      <h2 class="text-2xl font-semibold text-slate-900">Sense-focused Agents</h2>
+      <p class="mt-1 text-slate-600 max-w-3xl">Agents here primarily detect, ingest, or observe signals from imagery, SDI, or IoT — then hand findings to Plan/Act agents.</p>
+
+      <!-- Change Detection Agent -->
+      <article class="mt-6 bg-white border border-slate-200 card p-6 relative">
+        <span class="absolute right-4 top-4 chip px-2 py-1 rounded-full bg-cyan-50 text-cyan-700 border border-cyan-100">SENSE</span>
+        <div class="flex items-start gap-3">
+          <div class="text-2xl">🛰️</div>
+          <div>
+            <h3 class="text-xl font-semibold">Change Detection & Unauthorized Construction Agent</h3>
+            <p class="mt-1 text-slate-700">Detects unauthorized structures using temporal imagery and cadastral basemaps.</p>
+            <ul class="mt-3 list-disc pl-6 text-slate-700">
+              <li><strong>Sense:</strong> Reads aerial imagery and LiDAR time series via OGC/WMTS.</li>
+              <li><strong>Plan:</strong> Compares with official footprint layer from SDI.</li>
+              <li><strong>Act:</strong> Highlights deviations outside approved boundaries.</li>
+              <li><strong>Reflect:</strong> Generates inspection task list and preview thumbnails.</li>
+              <li><strong>Toolchain:</strong> ArcGIS Image Service + LangChain Validator → ArcGIS Dashboard.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Public Health GeoAI Agent -->
+      <article class="mt-6 bg-white border border-slate-200 card p-6 relative">
+        <span class="absolute right-4 top-4 chip px-2 py-1 rounded-full bg-cyan-50 text-cyan-700 border border-cyan-100">SENSE</span>
+        <div class="flex items-start gap-3">
+          <div class="text-2xl">🩺</div>
+          <div>
+            <h3 class="text-xl font-semibold">Public Health GeoAI Agent</h3>
+            <p class="mt-1 text-slate-700">Monitors outbreaks and clusters using spatial and temporal analysis.</p>
+            <ul class="mt-3 list-disc pl-6 text-slate-700">
+              <li><strong>Sense:</strong> Collects anonymized health event data from SDI feeds.</li>
+              <li><strong>Plan:</strong> Applies spatial clustering and trend detection models.</li>
+              <li><strong>Act:</strong> Issues alerts to emergency units and dashboards.</li>
+              <li><strong>Reflect:</strong> Publishes weekly hotspot bulletins and maps.</li>
+              <li><strong>Toolchain:</strong> GeoAI + Scan Statistics → ArcGIS Dashboard.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- PLAN -->
+    <section id="plan" class="mt-16">
+      <h2 class="text-2xl font-semibold text-slate-900">Plan-focused Agents</h2>
+      <p class="mt-1 text-slate-600 max-w-3xl">Agents here structure rules and scenarios that downstream Act agents execute and validate.</p>
+
+      <!-- Bylaw Parsing Agent -->
+      <article class="mt-6 bg-white border border-slate-200 card p-6 relative">
+        <span class="absolute right-4 top-4 chip px-2 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-100">PLAN</span>
+        <div class="flex items-start gap-3">
+          <div class="text-2xl">📚</div>
+          <div>
+            <h3 class="text-xl font-semibold">Bylaw Parsing & Semantic Retrieval Agent</h3>
+            <p class="mt-1 text-slate-700">Transforms lengthy planning documents into structured, searchable rule sets for agents and analysts.</p>
+            <ul class="mt-3 list-disc pl-6 text-slate-700">
+              <li><strong>Sense:</strong> Extracts text from uploaded PDFs (EN/AR).</li>
+              <li><strong>Plan:</strong> Segments and embeds content using pgvector or Deep Lake.</li>
+              <li><strong>Act:</strong> Performs natural-language Q&A for zoning rules.</li>
+              <li><strong>Reflect:</strong> Produces JSON-formatted rule summaries with citations.</li>
+              <li><strong>Toolchain:</strong> RAG + LangChain Retriever → ArcGIS Knowledge Graph.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Land-Use Forecasting Agent -->
+      <article class="mt-6 bg-white border border-slate-200 card p-6 relative">
+        <span class="absolute right-4 top-4 chip px-2 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-100">PLAN</span>
+        <div class="flex items-start gap-3">
+          <div class="text-2xl">🧠</div>
+          <div>
+            <h3 class="text-xl font-semibold">Land-Use Forecasting & Scenario Simulation Agent</h3>
+            <p class="mt-1 text-slate-700">Evaluates rezoning and development options using predictive KPIs for jobs, housing, and accessibility.</p>
+            <ul class="mt-3 list-disc pl-6 text-slate-700">
+              <li><strong>Sense:</strong> Collects zoning, transport, and demographic data.</li>
+              <li><strong>Plan:</strong> Builds multiple growth scenarios and policy levers.</li>
+              <li><strong>Act:</strong> Runs spatial and statistical simulations.</li>
+              <li><strong>Reflect:</strong> Outputs StoryMaps and dashboards for decision-makers.</li>
+              <li><strong>Toolchain:</strong> Scenario Planner + GeoAI → ArcGIS Dashboards.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ACT -->
+    <section id="act" class="mt-16">
+      <h2 class="text-2xl font-semibold text-slate-900">Act-focused Agents</h2>
+      <p class="mt-1 text-slate-600 max-w-3xl">Agents here execute validations and actions that generate approvals, tasks, or decisions.</p>
+
+      <!-- Zoning & Building Compliance Agent -->
+      <article class="mt-6 bg-white border border-slate-200 card p-6 relative">
+        <span class="absolute right-4 top-4 chip px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">ACT</span>
+        <div class="flex items-start gap-3">
+          <div class="text-2xl">🏗️</div>
+          <div>
+            <h3 class="text-xl font-semibold">Zoning & Building Compliance Agent</h3>
+            <p class="mt-1 text-slate-700">Validates parcels against zoning bylaws and produces explainable compliance reports.</p>
+            <ul class="mt-3 list-disc pl-6 text-slate-700">
+              <li><strong>Sense:</strong> Reads Parcel and Zoning layers from ArcGIS REST (read-only).</li>
+              <li><strong>Plan:</strong> Fetches rule embeddings from Vector DB (pgvector/Deep Lake).</li>
+              <li><strong>Act:</strong> Executes ArcGIS GP buffers/intersect to check setbacks, FAR, and height limits.</li>
+              <li><strong>Reflect:</strong> Generates PASS/FAIL with evidence maps and timestamps, downloadable PDF summary.</li>
+              <li><strong>Toolchain:</strong> LangChain Planner → ArcGIS GP Tools → WeasyPrint Report.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Infrastructure Coordination Agent -->
+      <article class="mt-6 bg-white border border-slate-200 card p-6 relative">
+        <span class="absolute right-4 top-4 chip px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">ACT</span>
+        <div class="flex items-start gap-3">
+          <div class="text-2xl">🧭</div>
+          <div>
+            <h3 class="text-xl font-semibold">Infrastructure Coordination Agent</h3>
+            <p class="mt-1 text-slate-700">Coordinates utilities and public works to avoid overlapping excavations.</p>
+            <ul class="mt-3 list-disc pl-6 text-slate-700">
+              <li><strong>Sense:</strong> Reads proposed work orders and utility layers.</li>
+              <li><strong>Plan:</strong> Checks spatial overlaps and ownership.</li>
+              <li><strong>Act:</strong> Notifies agencies and proposes alternative schedules.</li>
+              <li><strong>Reflect:</strong> Logs coordination results with timestamps.</li>
+              <li><strong>Toolchain:</strong> ArcGIS Intersect + LangChain Planner → Audit Log.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Maintenance Prioritization Agent -->
+      <article class="mt-6 bg-white border border-slate-200 card p-6 relative">
+        <span class="absolute right-4 top-4 chip px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">ACT</span>
+        <div class="flex items-start gap-3">
+          <div class="text-2xl">🛣️</div>
+          <div>
+            <h3 class="text-xl font-semibold">Maintenance Prioritization Agent</h3>
+            <p class="mt-1 text-slate-700">Ranks infrastructure maintenance based on risk, condition, and public impact.</p>
+            <ul class="mt-3 list-disc pl-6 text-slate-700">
+              <li><strong>Sense:</strong> Ingests IoT condition sensors and imagery.</li>
+              <li><strong>Plan:</strong> Computes severity × traffic × cost impact scores.</li>
+              <li><strong>Act:</strong> Generates ranked maintenance lists.</li>
+              <li><strong>Reflect:</strong> Sends updates to Work Force Management (WFM).</li>
+              <li><strong>Toolchain:</strong> GeoAI Model + ArcGIS Feature Layer → WFM Export.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Infrastructure Digital Twin Agent -->
+      <article class="mt-6 bg-white border border-slate-200 card p-6 relative">
+        <span class="absolute right-4 top-4 chip px-2 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100">ACT</span>
+        <div class="flex items-start gap-3">
+          <div class="text-2xl">🏗</div>
+          <div>
+            <h3 class="text-xl font-semibold">Infrastructure Digital Twin Agent</h3>
+            <p class="mt-1 text-slate-700">Maintains a live 3D registry of infrastructure assets linked with IoT and condition data.</p>
+            <ul class="mt-3 list-disc pl-6 text-slate-700">
+              <li><strong>Sense:</strong> Connects to IoT sensors and real-time feeds.</li>
+              <li><strong>Plan:</strong> Monitors asset lifecycle and risk scores.</li>
+              <li><strong>Act:</strong> Schedules maintenance or inspections automatically.</li>
+              <li><strong>Reflect:</strong> Updates the 3D Twin database and dashboard indicators.</li>
+              <li><strong>Toolchain:</strong> ArcGIS API + Sensor API → Digital Twin Dashboard.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- REFLECT -->
+    <section id="reflect" class="mt-16">
+      <h2 class="text-2xl font-semibold text-slate-900">Reflect-focused Agents</h2>
+      <p class="mt-1 text-slate-600 max-w-3xl">Agents here produce evidence packs, KPIs, audits, and lessons that improve future cycles.</p>
+
+      <!-- Title–Parcel Cross-Verification Agent -->
+      <article class="mt-6 bg-white border border-slate-200 card p-6 relative">
+        <span class="absolute right-4 top-4 chip px-2 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-100">REFLECT</span>
+        <div class="flex items-start gap-3">
+          <div class="text-2xl">🧾</div>
+          <div>
+            <h3 class="text-xl font-semibold">Title–Parcel Cross-Verification Agent</h3>
+            <p class="mt-1 text-slate-700">Cross-verifies deed coordinates with cadastral boundaries to flag overlaps and encroachments.</p>
+            <ul class="mt-3 list-disc pl-6 text-slate-700">
+              <li><strong>Sense:</strong> Reads coordinate data from title deed (PDF/Excel).</li>
+              <li><strong>Plan:</strong> Normalizes CRS and geometry precision using ArcPy Describe.</li>
+              <li><strong>Act:</strong> Performs topology validation with parcel feature service.</li>
+              <li><strong>Reflect:</strong> Generates integrity report with visual overlay and flagged errors.</li>
+              <li><strong>Toolchain:</strong> ArcPy + ArcGIS REST + ReportLab PDF Output.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Health Access Agent -->
+      <article class="mt-6 bg-white border border-slate-200 card p-6 relative">
+        <span class="absolute right-4 top-4 chip px-2 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-100">REFLECT</span>
+        <div class="flex items-start gap-3">
+          <div class="text-2xl">🏥</div>
+          <div>
+            <h3 class="text-xl font-semibold">Health Access Agent</h3>
+            <p class="mt-1 text-slate-700">Analyzes accessibility to healthcare facilities and identifies underserved areas.</p>
+            <ul class="mt-3 list-disc pl-6 text-slate-700">
+              <li><strong>Sense:</strong> Uses ArcGIS Network Analyst to compute drive-time zones.</li>
+              <li><strong>Plan:</strong> Correlates population density and facility coverage.</li>
+              <li><strong>Act:</strong> Identifies gaps and recommends new site locations.</li>
+              <li><strong>Reflect:</strong> Produces KPI maps and reports for planners.</li>
+              <li><strong>Toolchain:</strong> ArcGIS Network Service + Python API → Dashboard.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <footer class="mt-16 text-sm text-slate-500">
+      <p>Non‑disruptive architecture — read-only OGC/REST access, least-privilege tokens, time-stamped evidence, and audit logs.</p>
+    </footer>
+  </main>
+
+  <script>
+    // Click arcs to scroll to sections
+    const map = {
+      'arc-sense':'#sense',
+      'arc-plan':'#plan',
+      'arc-act':'#act',
+      'arc-reflect':'#reflect'
+    };
+    Object.keys(map).forEach(id=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.addEventListener('click', ()=>{
+        const target = document.querySelector(map[id]);
+        if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+      el.addEventListener('mouseenter', ()=>{ el.style.opacity = 0.85; });
+      el.addEventListener('mouseleave', ()=>{ el.style.opacity = 1; });
+    });
+  </script>
+</body>
+</html>
 
